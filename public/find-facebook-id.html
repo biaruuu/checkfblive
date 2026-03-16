@@ -1,707 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Find Facebook ID — KiroTools
-    </title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <style>
-      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:'Outfit',sans-serif!important;}
-*::selection{background:#4C4948!important;color:#fff;}
-:root{
-  --bg:#000;--card:#111111;--card2:#161616;
-  --border:rgba(255,255,255,0.08);--bord2:rgba(255,255,255,0.14);
-  --muted:#B4B4B4;--muted2:#888;--accent:#3b82f6;--accent-dim:rgba(59,130,246,0.15);
-  --green:#86efac;--green-dim:rgba(134,239,172,0.12);
-}
-html,body{min-height:100vh;background:var(--bg);color:#fff;overflow-x:hidden;}
-::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:#000;}::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:3px;}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find Facebook ID — KiroTools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
 
-/* ── Sidebar ── */
-.sidebar{
-  position:fixed;top:0;left:0;width:220px;height:100vh;
-  background:#0a0a0a;border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:300;
-  transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;
-}
-.sidebar::-webkit-scrollbar{width:3px;}
-.sidebar-logo{
-  display:flex;align-items:center;gap:10px;padding:1rem 1.1rem;
-  border-bottom:1px solid var(--border);text-decoration:none;height:60px;flex-shrink:0;
-}
-.logo-kiro{font-weight:800;color:#fff;font-style:italic;font-size:1.3rem;letter-spacing:-.04em;}
-.logo-tools{font-weight:300;color:rgba(255,255,255,.4);font-size:1.3rem;letter-spacing:-.04em;}
-.sidebar-section{padding:.85rem 0;}
-.sidebar-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a3a3a;padding:.25rem 1.1rem .6rem;}
-.sidebar-item{
-  display:flex;align-items:center;gap:9px;padding:.5rem 1.1rem;
-  color:var(--muted2);font-size:.8rem;font-weight:500;text-decoration:none;
-  transition:all .15s;border-left:2px solid transparent;margin:1px 0;
-}
-.sidebar-item:hover{color:#fff;background:rgba(255,255,255,.04);border-left-color:rgba(255,255,255,.2);}
-.sidebar-item.active{color:#fff;background:var(--accent-dim);border-left-color:var(--accent);}
-.sidebar-item svg{flex-shrink:0;opacity:.7;}
-.sidebar-item.active svg{opacity:1;}
-.sidebar-divider{height:1px;background:var(--border);margin:.5rem 1.1rem;}
-.sidebar-home{display:flex;align-items:center;gap:9px;padding:.6rem 1.1rem;color:var(--muted2);font-size:.8rem;font-weight:500;text-decoration:none;transition:all .15s;}
-.sidebar-home:hover{color:#fff;}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:299;backdrop-filter:blur(4px);}
-.sidebar-overlay.show{display:block;}
+<!-- ── TOP NAVBAR ── -->
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <path d="M8 8 L20 4 L32 20 L20 36 L8 28 Z" fill="#2563eb" opacity=".15"/>
+      <path d="M12 10 L24 6 L20 22 Z" fill="#2563eb"/>
+      <path d="M20 22 L30 16 L34 32 L20 36 Z" fill="#2563eb" opacity=".7"/>
+    </svg>
+    <span class="topbar-logo-text">KiroTools</span>
+  </a>
+  <div class="topbar-actions">
+    <button class="tb-icon-btn" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+    <button class="tb-icon-btn" title="Dark mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <span class="tb-flag" title="English">🇬🇧</span>
+    <button class="btn-signin">Sign In</button>
+  </div>
+</nav>
 
-/* ── Top Nav ── */
-#topnav{
-  position:sticky;top:0;z-index:200;
-  background:rgba(0,0,0,.92);border-bottom:1px solid var(--border);
-  backdrop-filter:blur(12px);display:flex;align-items:center;
-  justify-content:space-between;padding:0 1.25rem;height:60px;
-  margin-left:220px;transition:margin-left .3s;
-}
-.nav-hamburger{display:none;background:none;border:none;color:var(--muted2);cursor:pointer;padding:4px;transition:color .2s;flex-shrink:0;}
-.nav-hamburger:hover{color:#fff;}
-.nav-logo-mobile{display:none;align-items:baseline;letter-spacing:-.04em;text-decoration:none;user-select:none;}
-.nav-breadcrumb{display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--muted2);}
-.nav-breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .2s;}
-.nav-breadcrumb a:hover{color:#fff;}
-.nav-breadcrumb-sep{color:#333;}
-.nav-breadcrumb-cur{color:#fff;font-weight:600;}
-.nav-right{display:flex;align-items:center;gap:.75rem;}
-.nav-link{color:var(--muted2);font-size:.78rem;font-weight:600;text-decoration:none;padding:.35rem .65rem;border-radius:7px;transition:all .2s;}
-.nav-link:hover{color:#fff;background:rgba(255,255,255,.06);}
+<!-- ── SUB NAV ── -->
+<div class="subnav">
+  <button class="hamburger js-open-drawer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="breadcrumb">
+    <a href="index.html">Facebook Tools</a>
+    <svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg>
+    <span class="bc-cur">Find Facebook ID</span>
+  </div>
+</div>
 
-/* ── Main ── */
-#main{margin-left:220px;min-height:100vh;transition:margin-left .3s;}
-#page{max-width:760px;margin:0 auto;padding:2rem 1.5rem 5rem;display:flex;flex-direction:column;gap:1.25rem;}
-
-/* ── Page Header ── */
-.page-header{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:1.25rem 1.5rem;
-  display:flex;align-items:flex-start;gap:12px;
-}
-.page-header-icon{
-  width:44px;height:44px;background:var(--green-dim);
-  border:1px solid rgba(134,239,172,.25);border-radius:11px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;color:var(--green);
-}
-.page-title{font-size:1.1rem;font-weight:800;letter-spacing:-.03em;color:#fff;}
-.page-sub{font-size:.75rem;color:var(--muted2);margin-top:3px;line-height:1.5;}
-
-/* ── Input Card ── */
-.input-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:1.25rem 1.5rem;
-  display:flex;flex-direction:column;gap:1rem;
-}
-.field-label{font-size:.72rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.45rem;}
-.url-input{
-  background:rgba(255,255,255,.04);border:1px solid var(--border);
-  border-radius:10px;color:#fff;padding:.8rem 1rem;
-  font-size:.85rem;width:100%;outline:none;
-  transition:border-color .2s,background .2s;
-}
-.url-input:focus{border-color:rgba(134,239,172,.4);background:rgba(134,239,172,.03);}
-.url-input::placeholder{color:#333;}
-.input-actions{display:flex;gap:.65rem;flex-wrap:wrap;}
-.btn-find{
-  display:inline-flex;align-items:center;gap:7px;
-  background:var(--green);color:#000;border:none;
-  border-radius:9px;padding:.65rem 1.4rem;font-size:.82rem;
-  font-weight:800;cursor:pointer;transition:all .2s;flex:1;justify-content:center;
-}
-.btn-find:hover{background:#4ade80;transform:translateY(-1px);}
-.btn-find:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.btn-reset{
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(255,255,255,.06);color:var(--muted);
-  border:1px solid var(--bord2);border-radius:9px;
-  padding:.65rem 1.1rem;font-size:.82rem;font-weight:600;
-  cursor:pointer;transition:all .2s;
-}
-.btn-reset:hover{background:rgba(255,255,255,.1);color:#fff;}
-
-/* ── Result Card ── */
-.result-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;
-}
-
-/* ── Tab Switcher ── */
-.tab-switcher{
-  display:flex;gap:0;border-bottom:1px solid var(--border);
-  padding:0 .25rem;overflow-x:auto;scrollbar-width:none;
-}
-.tab-switcher::-webkit-scrollbar{display:none;}
-.tab-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:.8rem 1rem;font-size:.78rem;font-weight:600;
-  color:var(--muted2);background:none;border:none;cursor:pointer;
-  border-bottom:2px solid transparent;margin-bottom:-1px;
-  transition:all .15s;white-space:nowrap;
-}
-.tab-btn:hover{color:var(--muted);}
-.tab-btn.active{color:#fff;border-bottom-color:var(--accent);}
-.tab-panel{display:none;padding:1.25rem;}
-.tab-panel.active{display:block;}
-
-/* ── Result display ── */
-.result-empty{
-  padding:3rem 1rem;text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-}
-.result-empty svg{opacity:.12;}
-.result-empty-ttl{font-size:.85rem;font-weight:700;color:#333;}
-.result-empty-sub{font-size:.72rem;color:#3a3a3a;}
-
-.result-found{display:flex;flex-direction:column;gap:.75rem;}
-.result-field{
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-  border-radius:11px;padding:.9rem 1.1rem;
-  display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;
-  flex-wrap:wrap;
-}
-.result-field-key{
-  font-size:.65rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:.08em;color:#3a3a3a;margin-bottom:6px;
-}
-.result-field-val{
-  font-size:.92rem;font-weight:700;color:#fff;
-  word-break:break-all;font-family:'Courier New',monospace;
-}
-.result-field-val.id{
-  font-size:1.4rem;letter-spacing:-.02em;color:var(--green);
-}
-.result-field-val.url{
-  font-size:.8rem;color:#93c5fd;font-family:'Outfit',sans-serif!important;
-}
-.result-field-val.url a{color:inherit;text-decoration:none;}
-.result-field-val.url a:hover{text-decoration:underline;}
-.result-field-content{flex:1;}
-.copy-btn{
-  background:rgba(255,255,255,.06);border:1px solid var(--border);
-  color:var(--muted2);border-radius:7px;padding:.3rem .75rem;
-  font-size:.68rem;font-weight:600;cursor:pointer;
-  display:inline-flex;align-items:center;gap:4px;
-  transition:all .15s;white-space:nowrap;flex-shrink:0;
-}
-.copy-btn:hover{background:rgba(255,255,255,.12);color:#fff;border-color:var(--bord2);}
-
-/* ── Guide / FAQ panels ── */
-.guide-steps{display:flex;flex-direction:column;gap:.65rem;}
-.guide-step{
-  display:flex;align-items:flex-start;gap:.85rem;
-  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);
-  border-radius:10px;padding:.85rem 1rem;
-}
-.step-num{
-  width:26px;height:26px;background:var(--accent-dim);
-  border:1px solid rgba(59,130,246,.3);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.68rem;font-weight:800;color:var(--accent);flex-shrink:0;
-}
-.step-title{font-size:.8rem;font-weight:700;color:#fff;margin-bottom:3px;}
-.step-desc{font-size:.72rem;color:var(--muted2);line-height:1.55;}
-
-.faq-list{display:flex;flex-direction:column;gap:.5rem;}
-.faq-item{
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-  border-radius:10px;overflow:hidden;
-}
-.faq-q{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.85rem 1rem;cursor:pointer;user-select:none;
-  font-size:.8rem;font-weight:600;color:#ddd;
-  transition:color .15s;gap:.5rem;
-}
-.faq-q:hover{color:#fff;}
-.faq-q svg{flex-shrink:0;transition:transform .2s;color:var(--muted2);}
-.faq-q.open svg{transform:rotate(180deg);}
-.faq-a{
-  font-size:.74rem;color:var(--muted2);line-height:1.65;
-  max-height:0;overflow:hidden;transition:max-height .25s ease,padding .2s;
-  padding:0 1rem;
-}
-.faq-a.open{max-height:300px;padding:.25rem 1rem .85rem;}
-
-/* ── About panel ── */
-.about-section{display:flex;flex-direction:column;gap:.85rem;}
-.about-point{
-  display:flex;align-items:flex-start;gap:10px;
-  padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.04);
-}
-.about-point:last-child{border-bottom:none;}
-.about-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;flex-shrink:0;margin-top:5px;}
-.about-point-title{font-size:.8rem;font-weight:700;color:#fff;margin-bottom:3px;}
-.about-point-text{font-size:.73rem;color:var(--muted2);line-height:1.6;}
-
-/* ── Spinner ── */
-.spinner{width:16px;height:16px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── Toast ── */
-#toast{
-  position:fixed;bottom:1.5rem;right:1.5rem;
-  background:#111;border:1px solid var(--border);border-radius:10px;
-  padding:.65rem 1rem;font-size:.82rem;font-weight:500;
-  display:flex;align-items:center;gap:8px;z-index:9999;max-width:300px;
-  transform:translateY(20px);opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;
-}
-#toast.show{transform:translateY(0);opacity:1;}
-#toast.success{border-color:rgba(134,239,172,.3);color:var(--green);}
-#toast.error{border-color:rgba(252,165,165,.3);color:#fca5a5;}
-#toast.info{border-color:rgba(59,130,246,.3);color:#93c5fd;}
-
-/* ── Responsive ── */
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%);}
-  .sidebar.open{transform:translateX(0);}
-  #topnav{margin-left:0;}
-  #main{margin-left:0;}
-  .nav-hamburger{display:flex;}
-  .nav-logo-mobile{display:inline-flex;}
-  #page{padding:1.25rem 1rem 4rem;}
-  .page-header{padding:1rem 1.1rem;}
-  .input-card{padding:1rem 1.1rem;}
-}
-@media(max-width:480px){
-  .input-actions{flex-direction:column;}
-  .btn-find{flex:unset;width:100%;}
-  .btn-reset{width:100%;justify-content:center;}
-  .result-field{flex-direction:column;}
-}
-    </style>
-  </head>
-  <body>
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()">
+<!-- ── OVERLAY + DRAWER ── -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="drawer-logo">
+      <svg viewBox="0 0 40 40" fill="none" width="28" height="28">
+        <path d="M8 8 L20 4 L32 20 L20 36 L8 28 Z" fill="#2563eb" opacity=".15"/>
+        <path d="M12 10 L24 6 L20 22 Z" fill="#2563eb"/>
+        <path d="M20 22 L30 16 L34 32 L20 36 Z" fill="#2563eb" opacity=".7"/>
+      </svg>
+      <span class="drawer-logo-text">KiroTools</span>
     </div>
-    <aside class="sidebar" id="sidebar">
-      <a href="/kirotools.html" class="sidebar-logo">      <span class="logo-kiro">      Kiro
-</span>
-      <span class="logo-tools">      Tools
-</span>
-</a>
-      <div style="padding:.75rem 0 0;">
-        <a href="/kirotools.html" class="sidebar-home">        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z">
-          </path>
-          <polyline points="9 22 9 12 15 12 15 22">
-          </polyline>
-        </svg>
-        Home
-</a>
+    <button class="drawer-close js-close-drawer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-search">
+    <div class="dsearch-wrap">
+      <svg class="dsearch-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="dsearch-input" id="drawerSearch" placeholder="Search tools…" />
+    </div>
+  </div>
+  <nav class="drawer-nav">
+    <div class="nav-direct"><a href="index.html" style="color:inherit;text-decoration:none">ALL TOOLS</a></div>
+    <div class="nav-section">
+      <div class="nav-sec-hdr expanded">
+        FACEBOOK TOOLS
+        <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
       </div>
-      <div class="sidebar-divider" style="margin-top:.75rem;">
+      <div class="nav-items open">
+        <a href="check-live-uid.html" class="nav-item">Check Live UID Facebook</a>
+        <a href="#" class="nav-item">Check Live BM</a>
+        <a href="#" class="nav-item">Check BM Verified</a>
+        <a href="find-facebook-id.html" class="nav-item active">Find Facebook ID</a>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">
-          Facebook Tools
-        </div>
-        <a href="/check-live-uid.html" class="sidebar-item">        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2">
-          </path>
-          <circle cx="9" cy="7" r="4">
-          </circle>
-          <path d="M23 21v-2a4 4 0 00-3-3.87">
-          </path>
-          <path d="M16 3.13a4 4 0 010 7.75">
-          </path>
-        </svg>
-        Check Live UID
-</a>
-        <a href="/find-facebook-id.html" class="sidebar-item active">        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8">
-          </circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65">
-          </line>
-        </svg>
-        Find Facebook ID
-</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-sec-hdr">
+        INSTAGRAM TOOLS
+        <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
       </div>
-      <div class="sidebar-divider">
+      <div class="nav-items"></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-sec-hdr">
+        TIKTOK TOOLS
+        <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">
-          Resources
-        </div>
-        <a href="/documentation.html" class="sidebar-item">        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z">
-          </path>
-          <polyline points="14 2 14 8 20 8">
-          </polyline>
-        </svg>
-        Documentation
-</a>
+      <div class="nav-items"></div>
+    </div>
+  </nav>
+</aside>
+
+<!-- ── PAGE ── -->
+<div class="page-wrap">
+  <main class="page-content">
+
+    <!-- Tool header -->
+    <div class="tool-hdr">
+      <div class="tool-icon blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 2"/><circle cx="12" cy="12" r="3"/><path d="m15.5 15.5 2.5 2.5"/></svg>
       </div>
-    </aside>
-    <nav id="topnav">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <button class="nav-hamburger" onclick="openSidebar()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="3" y1="6" x2="21" y2="6">
-            </line>
-            <line x1="3" y1="12" x2="21" y2="12">
-            </line>
-            <line x1="3" y1="18" x2="21" y2="18">
-            </line>
-          </svg>
+      <div>
+        <div class="tool-title">Find Facebook ID</div>
+        <div class="tool-subtitle">Find Facebook IDs from profile, group, post, and page URLs</div>
+      </div>
+    </div>
+
+    <!-- Input area -->
+    <div class="form-group" id="singleGroup">
+      <div class="form-row">
+        <label class="form-label">Facebook URL or Username</label>
+        <button class="btn-toggle" id="bulkToggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Bulk Mode
         </button>
-        <a href="/kirotools.html" class="nav-logo-mobile">        <span class="logo-kiro" style="font-size:1.15rem;">        Kiro
-</span>
-        <span class="logo-tools" style="font-size:1.15rem;">        Tools
-</span>
-</a>
-        <div class="nav-breadcrumb" id="navBreadcrumb" style="display:none;">
-          <a href="/kirotools.html">          Home
-</a>
-          <span class="nav-breadcrumb-sep">          /
-</span>
-          <span class="nav-breadcrumb-cur">          Find Facebook ID
-</span>
-        </div>
       </div>
-      <div class="nav-right">
-        <a href="/documentation.html" class="nav-link">        Docs
-</a>
+      <input
+        type="text"
+        class="form-input"
+        id="urlInput"
+        placeholder="Enter URL or username (e.g., cristiano or https://facebook.com/…)"
+      />
+    </div>
+
+    <!-- Bulk textarea (hidden by default) -->
+    <div class="form-group" id="bulkGroup" style="display:none">
+      <div class="form-row">
+        <label class="form-label">Facebook URLs (one per line)</label>
+        <button class="btn-toggle active" id="bulkToggle2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Bulk Mode
+        </button>
       </div>
-    </nav>
-    <div id="main">
-      <div id="page">
-        <!-- Page Header -->
-        <div class="page-header">
-          <div class="page-header-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8">
-              </circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65">
-              </line>
-            </svg>
+      <textarea
+        class="form-textarea"
+        id="bulkInput"
+        placeholder="https://facebook.com/profile1&#10;https://facebook.com/profile2&#10;cristiano&#10;..."
+        rows="5"
+        style="min-height:120px"
+      ></textarea>
+      <div class="uid-count"><span id="urlCount">0</span> URLs</div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-row" id="singleBtnRow">
+      <button class="btn btn-primary" id="findBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Find Facebook ID
+      </button>
+      <button class="btn btn-outline" id="resetBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Reset
+      </button>
+    </div>
+    <div class="btn-row" id="bulkBtnRow" style="display:none">
+      <button class="btn btn-primary" id="findAllBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Find All IDs
+      </button>
+      <button class="btn btn-outline" id="resetBulkBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Reset
+      </button>
+    </div>
+
+    <!-- Single result card -->
+    <div class="single-result" id="singleResult">
+      <div class="res-row">
+        <span class="res-lbl">ID</span>
+        <span class="res-val" id="resId">—</span>
+        <button class="res-copy" onclick="copyToClipboard(document.getElementById('resId').textContent,'ID')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="res-row">
+        <span class="res-lbl">Name</span>
+        <span class="res-val" id="resName">—</span>
+        <button class="res-copy" onclick="copyToClipboard(document.getElementById('resName').textContent,'Name')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="res-row">
+        <span class="res-lbl">Type</span>
+        <span class="res-val" id="resType">—</span>
+      </div>
+      <div class="res-row">
+        <span class="res-lbl">URL</span>
+        <span class="res-val" id="resUrl">—</span>
+        <button class="res-copy" onclick="copyToClipboard(document.getElementById('resUrl').textContent,'URL')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bulk result section -->
+    <div class="results-area" id="bulkResultsArea" style="display:none">
+      <div class="result-section">
+        <div class="result-sec-hdr">
+          <div class="result-sec-title live">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            Results (<span id="bulkCount">0</span>)
           </div>
-          <div>
-            <div class="page-title">
-              Find Facebook ID
-            </div>
-            <div class="page-sub">
-              Get the numeric Facebook ID from any profile, page, group, or post URL
-            </div>
+          <div class="result-actions">
+            <button class="btn-sm" id="copyBulk">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+            <button class="btn-sm" id="exportBulk">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export
+            </button>
           </div>
         </div>
-        <!-- Input Card -->
-        <div class="input-card">
-          <div>
-            <div class="field-label">
-              Facebook URL or Username
-            </div>
-            <input type="text" class="url-input" id="urlInput" placeholder="e.g. cristiano  or  https://facebook.com/cristiano" onkeydown="if(event.key==='Enter')findID()" />
-          </div>
-          <div class="input-actions">
-            <button class="btn-find" id="findBtn" onclick="findID()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="11" cy="11" r="8">
-                </circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65">
-                </line>
-              </svg>
-              Find Facebook ID
-            </button>
-            <button class="btn-reset" onclick="resetAll()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polyline points="1 4 1 10 7 10">
-                </polyline>
-                <path d="M3.51 15a9 9 0 102.13-9.36L1 10">
-                </path>
-              </svg>
-              Reset
-            </button>
-          </div>
-        </div>
-        <!-- Result + Tabs -->
-        <div class="result-card">
-          <div class="tab-switcher">
-            <button class="tab-btn active" onclick="switchTab('result',this)">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="11" cy="11" r="8">
-                </circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65">
-                </line>
-              </svg>
-              Result
-            </button>
-            <button class="tab-btn" onclick="switchTab('guide',this)">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z">
-                </path>
-                <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z">
-                </path>
-              </svg>
-              Guide
-            </button>
-            <button class="tab-btn" onclick="switchTab('about',this)">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="12" cy="12" r="10">
-                </circle>
-                <line x1="12" y1="8" x2="12" y2="12">
-                </line>
-                <line x1="12" y1="16" x2="12.01" y2="16">
-                </line>
-              </svg>
-              About
-            </button>
-            <button class="tab-btn" onclick="switchTab('faq',this)">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="12" cy="12" r="10">
-                </circle>
-                <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3">
-                </path>
-                <line x1="12" y1="17" x2="12.01" y2="17">
-                </line>
-              </svg>
-              FAQ
-            </button>
-          </div>
-          <!-- Result Panel -->
-          <div class="tab-panel active" id="panelResult">
-            <div id="resultContent">
-              <div class="result-empty">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <circle cx="11" cy="11" r="8">
-                  </circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65">
-                  </line>
-                </svg>
-                <div class="result-empty-ttl">
-                  No result yet
-                </div>
-                <div class="result-empty-sub">
-                  Enter a Facebook URL or username above and click Find Facebook ID
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Guide Panel -->
-          <div class="tab-panel" id="panelGuide">
-            <div class="guide-steps">
-              <div class="guide-step">
-                <div class="step-num">
-                  1
-                </div>
-                <div>
-                  <div class="step-title">
-                    Copy a Facebook URL
-                  </div>
-                  <div class="step-desc">
-                    Go to any Facebook profile, page, group, or post and copy the URL from your browser's address bar.
-                  </div>
-                </div>
-              </div>
-              <div class="guide-step">
-                <div class="step-num">
-                  2
-                </div>
-                <div>
-                  <div class="step-title">
-                    Paste into the field
-                  </div>
-                  <div class="step-desc">
-                    Paste the copied URL or username into the input field above. Works with full URLs or just the username (e.g.,
-                    <code style="color:var(--accent);font-size:.7rem;">                    cristiano
-</code>
-                    ).
-                  </div>
-                </div>
-              </div>
-              <div class="guide-step">
-                <div class="step-num">
-                  3
-                </div>
-                <div>
-                  <div class="step-title">
-                    Click Find Facebook ID
-                  </div>
-                  <div class="step-desc">
-                    Press the button or hit Enter. The numeric Facebook ID and profile URL will appear in the Result tab.
-                  </div>
-                </div>
-              </div>
-              <div class="guide-step">
-                <div class="step-num">
-                  4
-                </div>
-                <div>
-                  <div class="step-title">
-                    Copy the result
-                  </div>
-                  <div class="step-desc">
-                    Use the Copy button next to the Facebook ID or profile URL to copy it to your clipboard instantly.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- About Panel -->
-          <div class="tab-panel" id="panelAbout">
-            <div class="about-section">
-              <div class="about-point">
-                <span class="about-dot"></span>
-                <div>
-                  <div class="about-point-title">
-                    What is a Facebook ID?
-                  </div>
-                  <div class="about-point-text">
-                    Every Facebook account, page, and group has a unique numeric ID (also called UID). This ID never changes even if the username or profile URL changes. It's used to uniquely identify any Facebook entity.
-                  </div>
-                </div>
-              </div>
-              <div class="about-point">
-                <span class="about-dot" style="background:var(--green);"></span>
-                <div>
-                  <div class="about-point-title">
-                    Supported URL Types
-                  </div>
-                  <div class="about-point-text">
-                    Works with profile URLs (facebook.com/username), page URLs, group URLs, post URLs, and plain usernames. Also supports facebook.com/profile.php?id=... format.
-                  </div>
-                </div>
-              </div>
-              <div class="about-point">
-                <span class="about-dot" style="background:#c4b5fd;"></span>
-                <div>
-                  <div class="about-point-title">
-                    How it works
-                  </div>
-                  <div class="about-point-text">
-                    Your request is sent to the server which queries the Facebook ID lookup API. This ensures no CORS issues and provides accurate, reliable results even for private or vanity URLs.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- FAQ Panel -->
-          <div class="tab-panel" id="panelFaq">
-            <div class="faq-list">
-              <div class="faq-item">
-                <div class="faq-q" onclick="toggleFaq(this)">
-                  What is a Facebook ID (UID)?
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <polyline points="6 9 12 15 18 9">
-                    </polyline>
-                  </svg>
-                </div>
-                <div class="faq-a">
-                  A Facebook ID (UID) is a unique numeric identifier assigned to every Facebook account, page, group, or post. It stays the same even if the person changes their username or profile URL.
-                </div>
-              </div>
-              <div class="faq-item">
-                <div class="faq-q" onclick="toggleFaq(this)">
-                  How do I find a Facebook ID from a URL?
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <polyline points="6 9 12 15 18 9">
-                    </polyline>
-                  </svg>
-                </div>
-                <div class="faq-a">
-                  Simply paste the Facebook profile, page, group, or post URL into the input field and click "Find Facebook ID". The tool will retrieve the numeric ID for you automatically.
-                </div>
-              </div>
-              <div class="faq-item">
-                <div class="faq-q" onclick="toggleFaq(this)">
-                  Can I find IDs for Facebook pages and groups?
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <polyline points="6 9 12 15 18 9">
-                    </polyline>
-                  </svg>
-                </div>
-                <div class="faq-a">
-                  Yes! This tool works with profiles, pages, groups, and posts. Just paste the URL and the tool will extract the correct numeric ID.
-                </div>
-              </div>
-              <div class="faq-item">
-                <div class="faq-q" onclick="toggleFaq(this)">
-                  Does it work with just a username?
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <polyline points="6 9 12 15 18 9">
-                    </polyline>
-                  </svg>
-                </div>
-                <div class="faq-a">
-                  Yes, you can enter just a username (e.g.,
-                  <code style="color:var(--accent);">                  cristiano
-</code>
-                  ) and the tool will resolve it to the full profile URL and numeric Facebook ID.
-                </div>
-              </div>
-              <div class="faq-item">
-                <div class="faq-q" onclick="toggleFaq(this)">
-                  Why is the result empty or an error?
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <polyline points="6 9 12 15 18 9">
-                    </polyline>
-                  </svg>
-                </div>
-                <div class="faq-a">
-                  This can happen if the profile is private, the URL is invalid, or the upstream API is temporarily unavailable. Make sure the URL is a valid public Facebook page and try again.
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="result-body">
+          <div class="result-empty" id="bulkEmpty">No results yet</div>
+          <textarea class="result-ta" id="bulkOutput" style="display:none" readonly></textarea>
         </div>
       </div>
     </div>
-    <div id="toast">
-    </div>
-    <script>
-      'use strict';
 
-function openSidebar(){
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('sidebarOverlay').classList.add('show');
+    <!-- Info Tabs -->
+    <div class="info-tabs-wrap">
+      <div class="info-tabs-hdr">
+        <button class="itab-btn active" data-tab="guide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Guide
+        </button>
+        <button class="itab-btn" data-tab="about">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          About
+        </button>
+        <button class="itab-btn" data-tab="faq">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          FAQ
+        </button>
+        <button class="itab-btn" data-tab="review">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Review
+        </button>
+      </div>
+
+      <!-- Guide -->
+      <div class="itab-panel active" data-panel="guide">
+        <div class="guide-steps">
+          <div class="guide-step">
+            <div class="step-num">1</div>
+            <div class="step-line"></div>
+            <div>
+              <div class="step-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+              </div>
+              <div class="step-desc">Copy the Facebook Profile URL, Group URL, Post URL, or Page URL from your browser.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="step-num">2</div>
+            <div class="step-line"></div>
+            <div>
+              <div class="step-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><clipboard cx="12" cy="12"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+                Paste
+              </div>
+              <div class="step-desc">Paste the copied Facebook link into the URL input field.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="step-num">3</div>
+            <div class="step-line"></div>
+            <div>
+              <div class="step-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Bulk Search
+              </div>
+              <div class="step-desc">Toggle <strong>Bulk Mode</strong> to look up multiple IDs at once — enter one URL per line.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="step-num">4</div>
+            <div>
+              <div class="step-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                Search
+              </div>
+              <div class="step-desc">Click <strong>Find Facebook ID</strong> to retrieve the numeric ID and profile details.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="itab-panel" data-panel="about">
+        <div class="about-text">
+          <p>The <strong>Find Facebook ID</strong> tool lets you quickly look up the numeric ID behind any Facebook profile, group, page, or post URL. Enter a URL or username and get the ID instantly.</p>
+          <p>This is useful for developers and marketers who need numeric Facebook IDs for API integrations, ad targeting, or data exports.</p>
+          <p>Enable <strong>Bulk Mode</strong> to look up multiple Facebook URLs at once — results can be copied or exported as a text file.</p>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="itab-panel" data-panel="faq">
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">What types of Facebook URLs are supported?</span>
+            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Profile URLs, Group URLs, Page URLs, and Post URLs are all supported. You can also enter just a username (e.g., <code>cristiano</code>).</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">Can I look up multiple IDs at once?</span>
+            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Yes! Toggle <strong>Bulk Mode</strong> and enter one URL per line to look up multiple IDs in a single search.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">What information is returned?</span>
+            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">The tool returns the numeric Facebook ID, display name, account type (profile/group/page), and the canonical URL.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">Why might a lookup fail?</span>
+            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Lookups can fail if the profile is private, the URL is malformed, or rate limiting is active. Try again after a short wait.</div></div>
+        </div>
+      </div>
+
+      <!-- Review -->
+      <div class="itab-panel" data-panel="review">
+        <div class="review-wrap">
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+          <div class="review-title">Enjoying KiroTools?</div>
+          <div class="review-desc">If this tool has been useful, we'd love your feedback.<br>It helps us keep improving!</div>
+          <button class="btn-review">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Leave a Review
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /info-tabs-wrap -->
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/app.js"></script>
+<script>
+// ─── Find Facebook ID Logic ─────────────────────────────────────
+const urlInput     = document.getElementById('urlInput');
+const bulkInput    = document.getElementById('bulkInput');
+const urlCount     = document.getElementById('urlCount');
+const findBtn      = document.getElementById('findBtn');
+const findAllBtn   = document.getElementById('findAllBtn');
+const resetBtn     = document.getElementById('resetBtn');
+const resetBulkBtn = document.getElementById('resetBulkBtn');
+const bulkToggle   = document.getElementById('bulkToggle');
+const bulkToggle2  = document.getElementById('bulkToggle2');
+const singleGroup  = document.getElementById('singleGroup');
+const bulkGroup    = document.getElementById('bulkGroup');
+const singleBtnRow = document.getElementById('singleBtnRow');
+const bulkBtnRow   = document.getElementById('bulkBtnRow');
+const singleResult = document.getElementById('singleResult');
+const bulkResultsArea = document.getElementById('bulkResultsArea');
+const bulkCount    = document.getElementById('bulkCount');
+const bulkOutput   = document.getElementById('bulkOutput');
+const bulkEmpty    = document.getElementById('bulkEmpty');
+
+let isBulk = false;
+let bulkResults = [];
+
+function toggleBulk(to) {
+  isBulk = to;
+  singleGroup.style.display = isBulk ? 'none' : '';
+  bulkGroup.style.display   = isBulk ? '' : 'none';
+  singleBtnRow.style.display = isBulk ? 'none' : '';
+  bulkBtnRow.style.display   = isBulk ? '' : 'none';
+  singleResult.classList.remove('show');
+  bulkResultsArea.style.display = 'none';
 }
-function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('show');
-}
-if(window.innerWidth > 768){
-  document.getElementById('navBreadcrumb').style.display = 'flex';
-}
 
-function switchTab(tab, el){
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  const panelId = 'panel' + tab.charAt(0).toUpperCase() + tab.slice(1);
-  document.getElementById(panelId).classList.add('active');
-}
+bulkToggle.addEventListener('click', () => toggleBulk(true));
+bulkToggle2.addEventListener('click', () => toggleBulk(false));
 
-function toggleFaq(el){
-  const answer = el.nextElementSibling;
-  const isOpen = el.classList.contains('open');
-  // Close all
-  document.querySelectorAll('.faq-q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
-  if(!isOpen){ el.classList.add('open'); answer.classList.add('open'); }
-}
+bulkInput.addEventListener('input', () => {
+  const lines = bulkInput.value.split('\n').filter(l => l.trim());
+  urlCount.textContent = lines.length;
+});
 
-async function findID(){
-  const url = document.getElementById('urlInput').value.trim();
-  if(!url){ toast('Please enter a Facebook URL or username.', 'error'); return; }
+// Single find
+findBtn.addEventListener('click', async () => {
+  const url = urlInput.value.trim();
+  if (!url) return showToast('Please enter a URL or username', 'error');
 
-  const btn = document.getElementById('findBtn');
-  btn.disabled = true;
-  btn.innerHTML = `<div class="spinner"></div> Looking up…`;
-
-  // Switch to result tab
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelector('.tab-btn').classList.add('active');
-  document.getElementById('panelResult').classList.add('active');
-
-  document.getElementById('resultContent').innerHTML = `
-    <div style="padding:2.5rem 1rem;display:flex;flex-direction:column;align-items:center;gap:12px;">
-      <div style="width:28px;height:28px;border:2px solid rgba(255,255,255,.08);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;"></div>
-      <div style="font-size:.75rem;color:var(--muted2);">Looking up Facebook ID…</div>
-    </div>`;
+  findBtn.disabled = true;
+  findBtn.innerHTML = `<div class="spinner"></div> Finding…`;
+  singleResult.classList.remove('show');
 
   try {
     const res = await fetch('/api/find-facebook-id', {
@@ -710,112 +417,97 @@ async function findID(){
       body: JSON.stringify({ url })
     });
     const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Request failed');
 
-    if(!res.ok || data.error){
-      showError(data.error || 'Failed to find Facebook ID.');
-    } else {
-      showResult(data);
+    document.getElementById('resId').textContent   = data.id   || '—';
+    document.getElementById('resName').textContent = data.name || '—';
+    document.getElementById('resType').textContent = data.type || '—';
+    document.getElementById('resUrl').textContent  = data.url  || url;
+    singleResult.classList.add('show');
+    showToast('ID found!', 'success');
+  } catch (err) {
+    showToast(err.message || 'Failed to find ID', 'error');
+  } finally {
+    findBtn.disabled = false;
+    findBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Find Facebook ID`;
+  }
+});
+
+// Bulk find
+findAllBtn.addEventListener('click', async () => {
+  const lines = bulkInput.value.split('\n').map(l => l.trim()).filter(l => l);
+  if (!lines.length) return showToast('Please enter at least one URL', 'error');
+
+  findAllBtn.disabled = true;
+  findAllBtn.innerHTML = `<div class="spinner"></div> Finding…`;
+  bulkResults = [];
+  bulkResultsArea.style.display = '';
+  bulkEmpty.style.display = '';
+  bulkOutput.style.display = 'none';
+  bulkCount.textContent = 0;
+
+  let done = 0;
+  for (const url of lines) {
+    try {
+      const res = await fetch('/api/find-facebook-id', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      const data = await res.json();
+      if (res.ok && data.id) {
+        bulkResults.push({ url, id: data.id, name: data.name || '', type: data.type || '' });
+      } else {
+        bulkResults.push({ url, id: 'ERROR', name: data.error || 'Failed', type: '' });
+      }
+    } catch {
+      bulkResults.push({ url, id: 'ERROR', name: 'Network error', type: '' });
     }
-  } catch(err){
-    showError('Connection error. Is the server running?');
+    done++;
+    bulkCount.textContent = done;
   }
 
-  btn.disabled = false;
-  btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Facebook ID`;
-}
+  const text = bulkResults.map(r => `${r.url} → ${r.id}${r.name ? ' | ' + r.name : ''}`).join('\n');
+  bulkEmpty.style.display = 'none';
+  bulkOutput.style.display = 'block';
+  bulkOutput.value = text;
+  bulkOutput.style.height = 'auto';
+  bulkOutput.style.height = Math.min(bulkOutput.scrollHeight, 300) + 'px';
 
-function showResult(data){
-  // Accept various field names from the API
-  const id = data.id || data.uid || data.facebook_id || data.fbid || '';
-  const profileUrl = data.profile_url || data.link || data.url || data.profile || '';
+  showToast(`Done! ${bulkResults.filter(r => r.id !== 'ERROR').length} IDs found`, 'success');
 
-  if(!id && !profileUrl){
-    showError('No result found. Try a different URL or username.');
-    return;
-  }
+  findAllBtn.disabled = false;
+  findAllBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Find All IDs`;
+});
 
-  let html = '<div class="result-found">';
+// Reset
+resetBtn.addEventListener('click', () => {
+  urlInput.value = '';
+  singleResult.classList.remove('show');
+  showToast('Reset!', 'info');
+});
+resetBulkBtn.addEventListener('click', () => {
+  bulkInput.value = '';
+  urlCount.textContent = 0;
+  bulkResults = [];
+  bulkResultsArea.style.display = 'none';
+  showToast('Reset!', 'info');
+});
 
-  if(id){
-    html += `
-      <div class="result-field">
-        <div class="result-field-content">
-          <div class="result-field-key">Facebook ID</div>
-          <div class="result-field-val id">${esc(id)}</div>
-        </div>
-        <button class="copy-btn" onclick="copyText('${esc(id)}',this)">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy
-        </button>
-      </div>`;
-  }
+// Copy/Export bulk
+document.getElementById('copyBulk').addEventListener('click', () => {
+  if (!bulkResults.length) return showToast('No results to copy', 'error');
+  copyToClipboard(bulkOutput.value, 'Results copied');
+});
+document.getElementById('exportBulk').addEventListener('click', () => {
+  if (!bulkResults.length) return showToast('No results to export', 'error');
+  exportAsText(bulkOutput.value, 'facebook-ids.txt');
+});
 
-  if(profileUrl){
-    html += `
-      <div class="result-field">
-        <div class="result-field-content">
-          <div class="result-field-key">Profile URL</div>
-          <div class="result-field-val url">
-            <a href="${esc(profileUrl)}" target="_blank" rel="noopener noreferrer">${esc(profileUrl)}</a>
-          </div>
-        </div>
-        <button class="copy-btn" onclick="copyText('${esc(profileUrl)}',this)">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy
-        </button>
-      </div>`;
-  }
-
-  html += '</div>';
-  document.getElementById('resultContent').innerHTML = html;
-  toast('Facebook ID found!', 'success');
-}
-
-function showError(msg){
-  document.getElementById('resultContent').innerHTML = `
-    <div class="result-empty">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="1.3"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-      <div class="result-empty-ttl" style="color:#fca5a5;">Error</div>
-      <div class="result-empty-sub">${esc(msg)}</div>
-    </div>`;
-  toast(msg, 'error');
-}
-
-function resetAll(){
-  document.getElementById('urlInput').value = '';
-  document.getElementById('resultContent').innerHTML = `
-    <div class="result-empty">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <div class="result-empty-ttl">No result yet</div>
-      <div class="result-empty-sub">Enter a Facebook URL or username above and click Find Facebook ID</div>
-    </div>`;
-  toast('Reset.', 'info');
-}
-
-function copyText(text, btn){
-  navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.innerHTML;
-    btn.textContent = 'Copied!';
-    btn.style.color = 'var(--green)';
-    toast('Copied!', 'success');
-    setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
-  }).catch(() => toast('Copy failed.', 'error'));
-}
-
-function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-function toast(msg, type='success'){
-  const el = document.getElementById('toast');
-  const icons = {
-    success:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`,
-    error:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
-    info:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`
-  };
-  el.className=`show ${type}`;
-  el.innerHTML=(icons[type]||icons.info)+msg;
-  clearTimeout(el._t);
-  el._t=setTimeout(()=>el.className='',3200);
-}
-    </script>
-  </body>
+// Enter key on single input
+urlInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') findBtn.click();
+});
+</script>
+</body>
 </html>
