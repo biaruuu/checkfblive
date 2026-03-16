@@ -1,767 +1,1033 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FB Live Checker</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      --bg-base:        #0d0d0d;
-      --bg-surface:     #171717;
-      --bg-overlay:     #1f1f1f;
-      --bg-muted:       #262626;
-      --border-default: #2e2e2e;
-      --border-strong:  #3d3d3d;
-      --text-primary:   #ececec;
-      --text-secondary: #a3a3a3;
-      --text-muted:     #575757;
-      --brand:          #3ecf8e;
-      --brand-hover:    #4eda98;
-      --brand-dim:      rgba(62,207,142,0.1);
-      --brand-border:   rgba(62,207,142,0.2);
-      --live-color:     #f87171;
-      --live-bg:        rgba(248,113,113,0.1);
-      --live-border:    rgba(248,113,113,0.25);
-      --off-color:      #737373;
-      --off-bg:         rgba(115,115,115,0.1);
-      --off-border:     rgba(115,115,115,0.2);
-      --err-color:      #fca5a5;
-      --err-bg:         rgba(239,68,68,0.08);
-      --err-border:     rgba(239,68,68,0.2);
-      --blue:           #60a5fa;
-      --r-xs: 4px; --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
-      --shadow: 0 1px 3px rgba(0,0,0,0.5), 0 6px 20px rgba(0,0,0,0.22);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg-base);
-      color: var(--text-primary);
-      font-family: 'Outfit', sans-serif;
-      font-size: 14px;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
-
-    /* ── Topbar ── */
-    .topbar {
-      background: rgba(23,23,23,0.9);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-default);
-      height: 54px;
-      display: flex;
-      align-items: center;
-      padding: 0 clamp(14px, 4vw, 28px);
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      gap: 12px;
-    }
-
-    .topbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-
-    .topbar-icon {
-      width: 28px; height: 28px;
-      background: var(--brand);
-      border-radius: 7px;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-    }
-
-    .topbar-icon svg { width: 14px; height: 14px; display: block; }
-
-    .topbar-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-    }
-
-    .topbar-sep { width: 1px; height: 17px; background: var(--border-default); flex-shrink: 0; }
-
-    .topbar-tag {
-      font-size: 10.5px;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: var(--bg-muted);
-      border: 1px solid var(--border-default);
-      border-radius: 99px;
-      padding: 2px 9px;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-    }
-
-    /* ── Layout ── */
-    .pg-wrap {
-      max-width: 840px;
-      margin: 0 auto;
-      padding: clamp(24px, 5vw, 52px) clamp(14px, 4vw, 26px) 80px;
-    }
-
-    /* ── Page Header ── */
-    .pg-head { margin-bottom: clamp(22px, 4vw, 38px); }
-
-    .pg-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 10.5px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-      color: var(--brand);
-      margin-bottom: 13px;
-    }
-
-    .eyebrow-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--brand);
-      animation: blink 2.2s ease-in-out infinite;
-    }
-
-    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.25;} }
-
-    .pg-head h1 {
-      font-size: clamp(21px, 4.2vw, 32px);
-      font-weight: 700;
-      letter-spacing: -0.035em;
-      color: var(--text-primary);
-      line-height: 1.18;
-      margin-bottom: 10px;
-    }
-
-    .pg-head p {
-      font-size: clamp(12.5px, 2.5vw, 14px);
-      color: var(--text-secondary);
-      line-height: 1.65;
-      max-width: 490px;
-    }
-
-    /* ── Info Banner ── */
-    .info-banner {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      padding: 11px 15px;
-      background: var(--brand-dim);
-      border: 1px solid var(--brand-border);
-      border-radius: var(--r-md);
-      font-size: 12.5px;
-      color: #86efac;
-      line-height: 1.55;
-      margin-bottom: 18px;
-    }
-
-    .info-banner i { flex-shrink: 0; font-size: 13px; margin-top: 1px; color: var(--brand); }
-
-    /* ── Card ── */
-    .card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-default);
-      border-radius: var(--r-lg);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .card-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 13px 18px;
-      border-bottom: 1px solid var(--border-default);
-      background: var(--bg-overlay);
-    }
-
-    .card-head-title {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .card-head-title i { color: var(--text-muted); font-size: 13px; }
-
-    .card-head-meta {
-      font-size: 11px;
-      color: var(--text-muted);
-      background: var(--bg-muted);
-      border: 1px solid var(--border-default);
-      border-radius: 99px;
-      padding: 2px 9px;
-      white-space: nowrap;
-    }
-
-    .card-body { padding: clamp(14px, 3vw, 20px); }
-
-    /* ── Field ── */
-    .field-label {
-      font-size: 11.5px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 7px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .uid-input {
-      width: 100%;
-      background: var(--bg-base);
-      border: 1px solid var(--border-default);
-      border-radius: var(--r-md);
-      color: var(--text-primary);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12.5px;
-      line-height: 1.75;
-      padding: 12px 14px;
-      resize: vertical;
-      min-height: 120px;
-      max-height: 300px;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      display: block;
-    }
-
-    .uid-input::placeholder { color: var(--text-muted); }
-
-    .uid-input:focus {
-      border-color: rgba(62,207,142,0.45);
-      box-shadow: 0 0 0 3px rgba(62,207,142,0.07);
-    }
-
-    .field-hint {
-      margin-top: 6px;
-      font-size: 11.5px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* ── Action row ── */
-    .act-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 15px;
-      flex-wrap: wrap;
-    }
-
-    .btn-run {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--brand);
-      color: #0a0a0a;
-      border: none;
-      border-radius: var(--r-sm);
-      font-family: 'Outfit', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 0 17px;
-      height: 34px;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-      flex-shrink: 0;
-      line-height: 1;
-    }
-
-    .btn-run:hover:not(:disabled) {
-      background: var(--brand-hover);
-      box-shadow: 0 0 0 3px rgba(62,207,142,0.15);
-    }
-
-    .btn-run:active:not(:disabled) { transform: scale(0.97); }
-    .btn-run:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .btn-sec {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: transparent;
-      color: var(--text-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--r-sm);
-      font-family: 'Outfit', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 0 14px;
-      height: 34px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-      line-height: 1;
-    }
-
-    .btn-sec:hover { border-color: var(--border-strong); color: var(--text-primary); background: var(--bg-overlay); }
-
-    .count-chip {
-      margin-left: auto;
-      font-size: 11.5px;
-      color: var(--text-muted);
-      background: var(--bg-muted);
-      border: 1px solid var(--border-default);
-      border-radius: 99px;
-      padding: 3px 10px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    /* ── Error ── */
-    .err-alert {
-      display: none;
-      align-items: flex-start;
-      gap: 9px;
-      padding: 11px 15px;
-      background: var(--err-bg);
-      border: 1px solid var(--err-border);
-      border-radius: var(--r-md);
-      font-size: 12.5px;
-      color: var(--err-color);
-      margin-top: 14px;
-      line-height: 1.5;
-    }
-
-    .err-alert i { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
-
-    /* ── Loading ── */
-    .loading-wrap {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 56px 24px;
-      color: var(--text-secondary);
-    }
-
-    .geist-spin {
-      color: var(--brand);
-      animation: gspin 0.75s linear infinite;
-      width: 22px; height: 22px;
-    }
-
-    @keyframes gspin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-
-    .loading-label { font-size: 13px; color: var(--text-secondary); }
-
-    .btn-gspin {
-      color: #0a0a0a;
-      animation: gspin 0.75s linear infinite;
-      width: 13px; height: 13px;
-      flex-shrink: 0;
-    }
-
-    /* ── Results ── */
-    .res-wrap { margin-top: 22px; }
-
-    .res-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 11px;
-    }
-
-    .res-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--text-muted);
-    }
-
-    .chips { display: flex; gap: 7px; flex-wrap: wrap; }
-
-    .chip {
-      font-size: 11.5px;
-      font-weight: 600;
-      border-radius: 99px;
-      padding: 3px 11px;
-      border: 1px solid transparent;
-    }
-
-    .chip-live { background: var(--live-bg); color: var(--live-color); border-color: var(--live-border); }
-    .chip-off  { background: var(--off-bg);  color: var(--off-color);  border-color: var(--off-border);  }
-
-    /* Table */
-    .tbl-outer {
-      border: 1px solid var(--border-default);
-      border-radius: var(--r-lg);
-      overflow: hidden;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      background: var(--bg-surface);
-      box-shadow: var(--shadow);
-    }
-
-    table.rt {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      min-width: 460px;
-    }
-
-    table.rt thead tr {
-      background: var(--bg-overlay);
-      border-bottom: 1px solid var(--border-default);
-    }
-
-    table.rt th {
-      padding: 10px 16px;
-      text-align: left;
-      font-size: 10.5px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--text-muted);
-      white-space: nowrap;
-      user-select: none;
-    }
-
-    table.rt tbody tr {
-      border-bottom: 1px solid var(--border-default);
-      transition: background 0.1s;
-    }
-
-    table.rt tbody tr:last-child { border-bottom: none; }
-    table.rt tbody tr:hover { background: var(--bg-overlay); }
-
-    table.rt td { padding: 11px 16px; vertical-align: middle; }
-
-    .td-idx {
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      width: 40px;
-      user-select: none;
-    }
-
-    .td-uid { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
-
-    .uid-link { color: var(--blue); text-decoration: none; transition: color 0.12s; }
-    .uid-link:hover { color: #93c5fd; text-decoration: underline; }
-
-    .td-name { color: var(--text-secondary); font-size: 13px; }
-    .name-null { color: var(--text-muted); font-style: italic; font-size: 11.5px; }
-
-    .sbadge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11.5px;
-      font-weight: 600;
-      border-radius: 99px;
-      padding: 4px 11px;
-      border: 1px solid transparent;
-      white-space: nowrap;
-    }
-
-    .sdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-
-    .sbadge-live {
-      background: var(--live-bg);
-      color: var(--live-color);
-      border-color: var(--live-border);
-    }
-
-    .sbadge-live .sdot {
-      background: #ef4444;
-      box-shadow: 0 0 5px rgba(239,68,68,0.7);
-      animation: dlive 1.4s ease-in-out infinite;
-    }
-
-    @keyframes dlive {
-      0%,100%{ box-shadow: 0 0 5px rgba(239,68,68,0.7); opacity:1; }
-      50%{ box-shadow: 0 0 2px rgba(239,68,68,0.2); opacity:0.45; }
-    }
-
-    .sbadge-off {
-      background: var(--off-bg);
-      color: var(--off-color);
-      border-color: var(--off-border);
-    }
-
-    .sbadge-off .sdot { background: #4d4d4d; }
-
-    /* ── Empty ── */
-    .empty-state { text-align: center; padding: clamp(40px, 8vw, 64px) 24px; }
-
-    .empty-icon {
-      width: 52px; height: 52px;
-      background: var(--bg-muted);
-      border: 1px solid var(--border-default);
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 16px;
-      font-size: 22px;
-      color: var(--text-muted);
-    }
-
-    .empty-state h3 {
-      font-size: 14.5px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 7px;
-      letter-spacing: -0.01em;
-    }
-
-    .empty-state p {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      max-width: 280px;
-      margin: 0 auto;
-    }
-
-    /* ── Footer ── */
-    .pg-footer {
-      margin-top: clamp(40px, 6vw, 60px);
-      padding-top: 18px;
-      border-top: 1px solid var(--border-default);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pg-footer span {
-      font-size: 12px;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    .footer-author {
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
-
-    /* ── Animations ── */
-    .fade-up { animation: fadeUp 0.28s ease both; }
-
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(9px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    .row-in { animation: rowIn 0.2s ease both; }
-
-    @keyframes rowIn {
-      from { opacity:0; transform:translateX(-5px); }
-      to   { opacity:1; transform:translateX(0); }
-    }
-
-    /* ── Responsive ── */
-    @media (min-width: 1200px) {
-      .pg-wrap { padding-top: 60px; }
-    }
-
-    @media (max-width: 767px) {
-      .topbar-tag { display: none; }
-      .topbar-sep { display: none; }
-      .count-chip { display: none; }
-      .btn-run { flex: 1; justify-content: center; }
-      table.rt { min-width: 340px; }
-    }
-
-    @media (max-width: 480px) {
-      .topbar-name { font-size: 13px; }
-      .topbar-icon { width: 25px; height: 25px; border-radius: 6px; }
-      .card-body { padding: 13px; }
-      .card-head { padding: 11px 13px; }
-      table.rt th:first-child,
-      table.rt td:first-child { display: none; }
-      table.rt { min-width: 260px; }
-      table.rt th, table.rt td { padding: 9px 11px; }
-      .sbadge { padding: 3px 9px; font-size: 11px; }
-    }
-
-    @media (max-width: 360px) {
-      .pg-head h1 { font-size: 19px; }
-      .btn-run, .btn-sec { font-size: 12.5px; height: 32px; }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FB Live Checker</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg-base: #090909;
+            --bg-surface: #111111;
+            --bg-overlay: #171717;
+            --bg-muted: #1c1c1c;
+            --bg-elevated: #222222;
+            --border-default: #232323;
+            --border-strong: #333333;
+            --border-muted: #1a1a1a;
+            --text-primary: #ededed;
+            --text-secondary: #a1a1a1;
+            --text-muted: #555555;
+            --brand: #3ecf8e;
+            --brand-hover: #4ade9a;
+            --brand-dim: rgba(62, 207, 142, 0.08);
+            --brand-border: rgba(62, 207, 142, 0.15);
+            --brand-glow: rgba(62, 207, 142, 0.12);
+            --live-color: #3ecf8e;
+            --live-bg: rgba(62, 207, 142, 0.08);
+            --live-border: rgba(62, 207, 142, 0.18);
+            --dead-color: #f97066;
+            --dead-bg: rgba(249, 112, 102, 0.08);
+            --dead-border: rgba(249, 112, 102, 0.18);
+            --err-color: #fca5a5;
+            --err-bg: rgba(239, 68, 68, 0.06);
+            --err-border: rgba(239, 68, 68, 0.15);
+            --blue: #3b82f6;
+            --blue-hover: #60a5fa;
+            --r-xs: 4px;
+            --r-sm: 6px;
+            --r-md: 8px;
+            --r-lg: 10px;
+            --r-xl: 14px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.5), 0 8px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 14px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 99px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* ── Topbar ── */
+        .topbar {
+            background: rgba(9, 9, 9, 0.85);
+            backdrop-filter: saturate(180%) blur(16px);
+            -webkit-backdrop-filter: saturate(180%) blur(16px);
+            border-bottom: 1px solid var(--border-default);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 clamp(16px, 4vw, 24px);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            gap: 12px;
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .topbar-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--brand);
+            border-radius: 6px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .topbar-icon svg {
+            width: 13px;
+            height: 13px;
+            display: block;
+        }
+
+        .topbar-name {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+
+        .topbar-sep {
+            width: 1px;
+            height: 16px;
+            background: var(--border-default);
+            flex-shrink: 0;
+        }
+
+        .topbar-tag {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: var(--bg-muted);
+            border: 1px solid var(--border-default);
+            border-radius: 99px;
+            padding: 2px 8px;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .topbar-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-muted);
+            padding: 3px 10px;
+            border-radius: 99px;
+            background: var(--bg-muted);
+            border: 1px solid var(--border-default);
+        }
+
+        .topbar-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--brand);
+            box-shadow: 0 0 6px var(--brand-glow);
+        }
+
+        /* ── Layout ── */
+        .pg-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: clamp(28px, 5vw, 56px) clamp(16px, 4vw, 24px) 80px;
+        }
+
+        /* ── Page Header ── */
+        .pg-head {
+            margin-bottom: clamp(24px, 4vw, 40px);
+        }
+
+        .pg-breadcrumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .pg-breadcrumb span {
+            color: var(--text-secondary);
+        }
+
+        .pg-breadcrumb .bc-sep {
+            color: var(--border-strong);
+        }
+
+        .pg-head h1 {
+            font-size: clamp(22px, 4vw, 30px);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .pg-head p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 520px;
+        }
+
+        /* ── Info Banner ── */
+        .info-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--brand-dim);
+            border: 1px solid var(--brand-border);
+            border-radius: var(--r-md);
+            font-size: 13px;
+            color: rgba(62, 207, 142, 0.85);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .info-banner i {
+            flex-shrink: 0;
+            font-size: 14px;
+            margin-top: 1px;
+            color: var(--brand);
+        }
+
+        .info-banner strong {
+            color: var(--brand);
+            font-weight: 600;
+        }
+
+        /* ── Card ── */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--r-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-default);
+            background: var(--bg-overlay);
+        }
+
+        .card-head-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .card-head-title i {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .card-head-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--bg-muted);
+            border: 1px solid var(--border-default);
+            border-radius: 99px;
+            padding: 2px 10px;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: clamp(16px, 3vw, 22px);
+        }
+
+        /* ── Field ── */
+        .field-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .uid-input {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--border-default);
+            border-radius: var(--r-md);
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            padding: 14px 16px;
+            resize: vertical;
+            min-height: 130px;
+            max-height: 300px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            display: block;
+        }
+
+        .uid-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .uid-input:focus {
+            border-color: rgba(62, 207, 142, 0.4);
+            box-shadow: 0 0 0 3px rgba(62, 207, 142, 0.06), inset 0 0 0 1px rgba(62, 207, 142, 0.15);
+        }
+
+        .field-hint {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ── Action row ── */
+        .act-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-run {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--brand);
+            color: #000;
+            border: none;
+            border-radius: var(--r-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 18px;
+            height: 36px;
+            cursor: pointer;
+            transition: all 0.15s;
+            flex-shrink: 0;
+            line-height: 1;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-run:hover:not(:disabled) {
+            background: var(--brand-hover);
+            box-shadow: 0 0 0 3px var(--brand-glow), 0 2px 8px rgba(62, 207, 142, 0.2);
+        }
+
+        .btn-run:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .btn-run:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .btn-sec {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--r-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 0 15px;
+            height: 36px;
+            cursor: pointer;
+            transition: all 0.15s;
+            line-height: 1;
+        }
+
+        .btn-sec:hover {
+            border-color: var(--border-strong);
+            color: var(--text-primary);
+            background: var(--bg-overlay);
+        }
+
+        .count-chip {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-muted);
+            border: 1px solid var(--border-default);
+            border-radius: 99px;
+            padding: 4px 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+        }
+
+        /* ── Error ── */
+        .err-alert {
+            display: none;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--err-bg);
+            border: 1px solid var(--err-border);
+            border-radius: var(--r-md);
+            font-size: 13px;
+            color: var(--err-color);
+            margin-top: 14px;
+            line-height: 1.5;
+        }
+
+        .err-alert i {
+            flex-shrink: 0;
+            font-size: 14px;
+            margin-top: 1px;
+        }
+
+        /* ── Loading ── */
+        .loading-wrap {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 60px 24px;
+            color: var(--text-secondary);
+        }
+
+        .geist-spin {
+            color: var(--brand);
+            animation: gspin 0.75s linear infinite;
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes gspin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .btn-gspin {
+            color: #000;
+            animation: gspin 0.75s linear infinite;
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        /* ── Results ── */
+        .res-wrap {
+            margin-top: 24px;
+        }
+
+        .res-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .res-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 99px;
+            padding: 4px 12px;
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.02em;
+        }
+
+        .chip-live {
+            background: var(--live-bg);
+            color: var(--live-color);
+            border-color: var(--live-border);
+        }
+
+        .chip-dead {
+            background: var(--dead-bg);
+            color: var(--dead-color);
+            border-color: var(--dead-border);
+        }
+
+        /* Table */
+        .tbl-outer {
+            border: 1px solid var(--border-default);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            background: var(--bg-surface);
+            box-shadow: var(--shadow);
+        }
+
+        table.rt {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 480px;
+        }
+
+        table.rt thead tr {
+            background: var(--bg-overlay);
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        table.rt th {
+            padding: 10px 18px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        table.rt tbody tr {
+            border-bottom: 1px solid var(--border-muted);
+            transition: background 0.12s;
+        }
+
+        table.rt tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        table.rt tbody tr:hover {
+            background: var(--bg-muted);
+        }
+
+        table.rt td {
+            padding: 12px 18px;
+            vertical-align: middle;
+        }
+
+        .td-idx {
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            width: 44px;
+            user-select: none;
+        }
+
+        .td-uid {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        .uid-link {
+            color: var(--blue);
+            text-decoration: none;
+            transition: color 0.12s;
+        }
+
+        .uid-link:hover {
+            color: var(--blue-hover);
+            text-decoration: underline;
+        }
+
+        .td-name {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .name-null {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .sbadge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 99px;
+            padding: 4px 12px;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+        }
+
+        .sdot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .sbadge-live {
+            background: var(--live-bg);
+            color: var(--live-color);
+            border-color: var(--live-border);
+        }
+
+        .sbadge-live .sdot {
+            background: var(--brand);
+            box-shadow: 0 0 6px rgba(62, 207, 142, 0.6);
+            animation: dpulse 2s ease-in-out infinite;
+        }
+
+        @keyframes dpulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 6px rgba(62, 207, 142, 0.6);
+                opacity: 1;
+            }
+
+            50% {
+                box-shadow: 0 0 2px rgba(62, 207, 142, 0.15);
+                opacity: 0.4;
+            }
+        }
+
+        .sbadge-dead {
+            background: var(--dead-bg);
+            color: var(--dead-color);
+            border-color: var(--dead-border);
+        }
+
+        .sbadge-dead .sdot {
+            background: var(--dead-color);
+            opacity: 0.5;
+        }
+
+        /* ── Empty ── */
+        .empty-state {
+            text-align: center;
+            padding: clamp(44px, 8vw, 68px) 24px;
+        }
+
+        .empty-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-muted);
+            border: 1px solid var(--border-default);
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 18px;
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* ── Footer ── */
+        .pg-footer {
+            margin-top: clamp(44px, 6vw, 64px);
+            padding-top: 20px;
+            border-top: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pg-footer span {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .footer-author {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* ── Animations ── */
+        .fade-up {
+            animation: fadeUp 0.3s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .row-in {
+            animation: rowIn 0.22s ease both;
+        }
+
+        @keyframes rowIn {
+            from {
+                opacity: 0;
+                transform: translateX(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ── Responsive ── */
+        @media (min-width: 1200px) {
+            .pg-wrap {
+                padding-top: 64px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .topbar-tag {
+                display: none;
+            }
+
+            .topbar-sep {
+                display: none;
+            }
+
+            .topbar-status {
+                display: none;
+            }
+
+            .count-chip {
+                display: none;
+            }
+
+            .btn-run {
+                flex: 1;
+                justify-content: center;
+            }
+
+            table.rt {
+                min-width: 360px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topbar-name {
+                font-size: 13px;
+            }
+
+            .topbar-icon {
+                width: 24px;
+                height: 24px;
+                border-radius: 5px;
+            }
+
+            .card-body {
+                padding: 14px;
+            }
+
+            .card-head {
+                padding: 12px 14px;
+            }
+
+            table.rt th:first-child,
+            table.rt td:first-child {
+                display: none;
+            }
+
+            table.rt {
+                min-width: 280px;
+            }
+
+            table.rt th,
+            table.rt td {
+                padding: 10px 12px;
+            }
+
+            .sbadge {
+                padding: 3px 10px;
+                font-size: 10.5px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .pg-head h1 {
+                font-size: 20px;
+            }
+
+            .btn-run,
+            .btn-sec {
+                font-size: 12.5px;
+                height: 34px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-  <!-- Topbar -->
-  <nav class="topbar">
-    <a href="#" class="topbar-brand">
-      <div class="topbar-icon">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="8" cy="8" r="6" stroke="#0a0a0a" stroke-width="1.5"/>
-          <circle cx="8" cy="8" r="2" fill="#0a0a0a"/>
-          <path d="M8 2v2M8 12v2M2 8h2M12 8h2" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="topbar-name">FB Live Checker</span>
-    </a>
-    <div class="topbar-sep"></div>
-    <span class="topbar-tag">v1.0</span>
-  </nav>
-
-  <!-- Main -->
-  <main class="pg-wrap">
-
-    <!-- Header -->
-    <div class="pg-head fade-up">
-      <div class="pg-eyebrow">
-        <span class="eyebrow-dot"></span>
-        Facebook Live Status
-      </div>
-      <h1>Check UID Live Status</h1>
-      <p>Paste one or more Facebook UIDs to instantly verify whether each account is currently broadcasting live.</p>
-    </div>
-
-    <!-- Info Banner -->
-    <div class="info-banner fade-up" style="animation-delay:.06s">
-      <i class="bi bi-info-circle-fill"></i>
-      <span>Enter one UID per line. Supports up to <strong>50 UIDs</strong> per request. Press <strong>Ctrl&thinsp;+&thinsp;Enter</strong> to run.</span>
-    </div>
-
-    <!-- Input Card -->
-    <div class="card fade-up" style="animation-delay:.12s">
-      <div class="card-head">
-        <span class="card-head-title">
-          <i class="bi bi-code-square"></i>
-          UID Input
-        </span>
-        <span class="card-head-meta">One per line</span>
-      </div>
-      <div class="card-body">
-        <label class="field-label" for="uidInput">
-          <i class="bi bi-hash"></i> Facebook UIDs
-        </label>
-        <textarea
-          id="uidInput"
-          class="uid-input"
-          placeholder="61585015900971&#10;61563790194125&#10;..."
-          spellcheck="false"
-          autocomplete="off"
-          autocorrect="off"
-        ></textarea>
-        <div class="field-hint">
-          <i class="bi bi-info-circle"></i>
-          Numeric IDs only (10+ digits). Separate by newline, comma, or space.
+    <!-- Topbar -->
+    <nav class="topbar">
+        <a href="#" class="topbar-brand">
+            <div class="topbar-icon">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8" r="6" stroke="#000" stroke-width="1.5" />
+                    <circle cx="8" cy="8" r="2" fill="#000" />
+                    <path d="M8 2v2M8 12v2M2 8h2M12 8h2" stroke="#000" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </div>
+            <span class="topbar-name">FB Live Checker</span>
+        </a>
+        <div class="topbar-sep"></div>
+        <span class="topbar-tag">v1.0</span>
+        <div class="topbar-right">
+            <div class="topbar-status">
+                <span class="topbar-dot"></span>
+                Operational
+            </div>
         </div>
-        <div class="act-row">
-          <button class="btn-run" id="checkBtn" onclick="checkUIDs()">
-            <i class="bi bi-play-fill" id="btnIcon"></i>
-            <span id="btnText">Run Check</span>
-          </button>
-          <button class="btn-sec" onclick="clearAll()">
-            <i class="bi bi-arrow-counterclockwise"></i>
-            Clear
-          </button>
-          <span class="count-chip" id="uidCountBadge">0 UIDs</span>
+    </nav>
+
+    <!-- Main -->
+    <main class="pg-wrap">
+
+        <!-- Header -->
+        <div class="pg-head fade-up">
+            <div class="pg-breadcrumb">
+                <span>Dashboard</span>
+                <span class="bc-sep">/</span>
+                <span style="color:var(--text-secondary)">UID Checker</span>
+            </div>
+            <h1>Check UID Status</h1>
+            <p>Paste one or more Facebook UIDs to verify whether each account is Live or Dead.</p>
         </div>
-        <div class="err-alert" id="errAlert">
-          <i class="bi bi-exclamation-triangle-fill"></i>
-          <span id="errMsg">Something went wrong.</span>
+
+        <!-- Info Banner -->
+        <div class="info-banner fade-up" style="animation-delay:.05s">
+            <i class="bi bi-info-circle-fill"></i>
+            <span>Enter one UID per line. Supports up to <strong>50 UIDs</strong> per request. Press <strong>Ctrl +
+                    Enter</strong> to run.</span>
         </div>
-      </div>
-    </div>
 
-    <!-- Loading -->
-    <div class="loading-wrap" id="loadingWrap">
-      <svg class="geist-spin" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#cg)">
-          <path d="M8 0V4" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.5" d="M8 16V12" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.9" d="M3.29773 1.52783L5.64887 4.7639" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.1" d="M12.7023 1.52783L10.3511 4.7639" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.4" d="M12.7023 14.472L10.3511 11.236" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.6" d="M3.29773 14.472L5.64887 11.236" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.2" d="M15.6085 5.52783L11.8043 6.7639" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.7" d="M0.391602 10.472L4.19583 9.23598" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.3" d="M15.6085 10.4722L11.8043 9.2361" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.8" d="M0.391602 5.52783L4.19583 6.7639" stroke="currentColor" stroke-width="1.5"/>
-        </g>
-        <defs><clipPath id="cg"><rect width="16" height="16" fill="white"/></clipPath></defs>
-      </svg>
-      <span class="loading-label">Querying Facebook API…</span>
-    </div>
-
-    <!-- Results -->
-    <div class="res-wrap" id="resWrap" style="display:none;">
-      <div class="res-top">
-        <span class="res-label"><i class="bi bi-table"></i> Results</span>
-        <div class="chips">
-          <span class="chip chip-live" id="liveCount">0 Live</span>
-          <span class="chip chip-off"  id="offCount">0 Offline</span>
+        <!-- Input Card -->
+        <div class="card fade-up" style="animation-delay:.1s">
+            <div class="card-head">
+                <span class="card-head-title">
+                    <i class="bi bi-terminal"></i>
+                    UID Input
+                </span>
+                <span class="card-head-meta">One per line</span>
+            </div>
+            <div class="card-body">
+                <label class="field-label" for="uidInput">
+                    <i class="bi bi-hash"></i> Facebook UIDs
+                </label>
+                <textarea id="uidInput" class="uid-input" placeholder="61585015900971&#10;61563790194125&#10;..."
+                    spellcheck="false" autocomplete="off" autocorrect="off"></textarea>
+                <div class="field-hint">
+                    <i class="bi bi-info-circle"></i>
+                    Numeric IDs only (10+ digits). Separate by newline, comma, or space.
+                </div>
+                <div class="act-row">
+                    <button class="btn-run" id="checkBtn" onclick="checkUIDs()">
+                        <i class="bi bi-play-fill" id="btnIcon"></i>
+                        <span id="btnText">Run Check</span>
+                    </button>
+                    <button class="btn-sec" onclick="clearAll()">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        Clear
+                    </button>
+                    <span class="count-chip" id="uidCountBadge">0 UIDs</span>
+                </div>
+                <div class="err-alert" id="errAlert">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span id="errMsg">Something went wrong.</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="tbl-outer">
-        <table class="rt">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>UID</th>
-              <th>Name</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="resBody"></tbody>
-        </table>
-      </div>
-    </div>
 
-    <!-- Empty -->
-    <div class="card fade-up" id="emptyState" style="margin-top:22px; animation-delay:.18s">
-      <div class="empty-state">
-        <div class="empty-icon"><i class="bi bi-broadcast"></i></div>
-        <h3>No results yet</h3>
-        <p>Enter your Facebook UIDs above and click <strong style="color:var(--text-secondary)">Run Check</strong> to see live status.</p>
-      </div>
-    </div>
+        <!-- Loading -->
+        <div class="loading-wrap" id="loadingWrap">
+            <svg class="geist-spin" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#cg)">
+                    <path d="M8 0V4" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.5" d="M8 16V12" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.9" d="M3.29773 1.52783L5.64887 4.7639" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.1" d="M12.7023 1.52783L10.3511 4.7639" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.4" d="M12.7023 14.472L10.3511 11.236" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.6" d="M3.29773 14.472L5.64887 11.236" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.2" d="M15.6085 5.52783L11.8043 6.7639" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.7" d="M0.391602 10.472L4.19583 9.23598" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.3" d="M15.6085 10.4722L11.8043 9.2361" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.8" d="M0.391602 5.52783L4.19583 6.7639" stroke="currentColor" stroke-width="1.5" />
+                </g>
+                <defs>
+                    <clipPath id="cg">
+                        <rect width="16" height="16" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+            <span class="loading-label">Checking UIDs…</span>
+        </div>
 
-    <!-- Footer -->
-    <footer class="pg-footer">
-      <span>© 2026 Developed by <span class="footer-author">Kiro Takashi</span></span>
-    </footer>
+        <!-- Results -->
+        <div class="res-wrap" id="resWrap" style="display:none;">
+            <div class="res-top">
+                <span class="res-label"><i class="bi bi-table"></i> Results</span>
+                <div class="chips">
+                    <span class="chip chip-live" id="liveCount">0 Live</span>
+                    <span class="chip chip-dead" id="deadCount">0 Dead</span>
+                </div>
+            </div>
+            <div class="tbl-outer">
+                <table class="rt">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>UID</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resBody"></tbody>
+                </table>
+            </div>
+        </div>
 
-  </main>
+        <!-- Empty -->
+        <div class="card fade-up" id="emptyState" style="margin-top:24px; animation-delay:.15s">
+            <div class="empty-state">
+                <div class="empty-icon"><i class="bi bi-shield-check"></i></div>
+                <h3>No results yet</h3>
+                <p>Enter your Facebook UIDs above and click <strong style="color:var(--text-secondary)">Run
+                        Check</strong> to see status.</p>
+            </div>
+        </div>
 
-  <script>
-    const $ = id => document.getElementById(id);
+        <!-- Footer -->
+        <footer class="pg-footer">
+            <span>&copy; 2026 <span class="footer-author">Kiro Takashi</span></span>
+        </footer>
 
-    function parseUIDs(raw) {
-      return raw.split(/[\n,\s]+/).map(s => s.trim()).filter(s => /^\d{10,}$/.test(s));
-    }
+    </main>
 
-    function esc(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
+    <script>
+        const $ = id => document.getElementById(id);
 
-    // Geist spinner for button
-    const GSPIN = `<svg class="btn-gspin" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        function parseUIDs(raw) {
+            return raw.split(/[\n,\s]+/).map(s => s.trim()).filter(s => /^\d{10,}$/.test(s));
+        }
+
+        function esc(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        const GSPIN = `<svg class="btn-gspin" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#cbtn)">
         <path d="M8 0V4" stroke="currentColor" stroke-width="1.5"/>
         <path opacity="0.5" d="M8 16V12" stroke="currentColor" stroke-width="1.5"/>
@@ -777,107 +1043,104 @@
       <defs><clipPath id="cbtn"><rect width="16" height="16" fill="white"/></clipPath></defs>
     </svg>`;
 
-    $('uidInput').addEventListener('input', () => {
-      const n = parseUIDs($('uidInput').value).length;
-      $('uidCountBadge').textContent = `${n} UID${n !== 1 ? 's' : ''}`;
-    });
-
-    function clearAll() {
-      $('uidInput').value = '';
-      $('uidCountBadge').textContent = '0 UIDs';
-      $('resWrap').style.display = 'none';
-      $('emptyState').style.display = '';
-      $('errAlert').style.display = 'none';
-    }
-
-    async function checkUIDs() {
-      const uids = parseUIDs($('uidInput').value);
-      $('errAlert').style.display = 'none';
-
-      if (!uids.length) {
-        $('errMsg').textContent = 'Please enter at least one valid Facebook UID (numeric, 10+ digits).';
-        $('errAlert').style.display = 'flex';
-        return;
-      }
-
-      const btn = $('checkBtn');
-      btn.disabled = true;
-      btn.innerHTML = GSPIN + '<span>Checking…</span>';
-
-      $('loadingWrap').style.display = 'flex';
-      $('resWrap').style.display = 'none';
-      $('emptyState').style.display = 'none';
-
-      try {
-        const res = await fetch('/api/check-uid', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ uids })
+        $('uidInput').addEventListener('input', () => {
+            const n = parseUIDs($('uidInput').value).length;
+            $('uidCountBadge').textContent = `${n} UID${n !== 1 ? 's' : ''}`;
         });
 
-        const json = await res.json();
-        if (!res.ok) throw new Error(json.error || 'Server error');
-        renderResults(json.results);
-      } catch (err) {
-        $('errMsg').textContent = err.message || 'Unexpected error occurred.';
-        $('errAlert').style.display = 'flex';
-        $('emptyState').style.display = '';
-      } finally {
-        $('loadingWrap').style.display = 'none';
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-play-fill"></i><span>Run Check</span>';
-      }
-    }
+        function clearAll() {
+            $('uidInput').value = '';
+            $('uidCountBadge').textContent = '0 UIDs';
+            $('resWrap').style.display = 'none';
+            $('emptyState').style.display = '';
+            $('errAlert').style.display = 'none';
+        }
 
-    function renderResults(data) {
-      const tbody = $('resBody');
-      tbody.innerHTML = '';
-      let rows = Array.isArray(data) ? data : (data && typeof data === 'object' ? Object.values(data) : []);
+        async function checkUIDs() {
+            const uids = parseUIDs($('uidInput').value);
+            $('errAlert').style.display = 'none';
 
-      // Filter out any null / non-object entries from the API response
-      rows = rows.filter(item => item !== null && typeof item === 'object');
+            if (!uids.length) {
+                $('errMsg').textContent = 'Please enter at least one valid Facebook UID (numeric, 10+ digits).';
+                $('errAlert').style.display = 'flex';
+                return;
+            }
 
-      if (!rows.length) { $('emptyState').style.display = ''; return; }
+            const btn = $('checkBtn');
+            btn.disabled = true;
+            btn.innerHTML = GSPIN + '<span>Checking…</span>';
 
-      let live = 0, off = 0;
+            $('loadingWrap').style.display = 'flex';
+            $('resWrap').style.display = 'none';
+            $('emptyState').style.display = 'none';
 
-      rows.forEach((item, i) => {
-        const isLive = item.live === true;
-        isLive ? live++ : off++;
+            try {
+                const res = await fetch('/api/check-uid', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ uids })
+                });
 
-        const uid = item.uid || '—';
-        const name = item.name && item.name !== 'null' ? item.name : null;
-        const fbUrl = `https://www.facebook.com/${uid}`;
+                const json = await res.json();
+                if (!res.ok) throw new Error(json.error || 'Server error');
+                renderResults(json.results);
+            } catch (err) {
+                $('errMsg').textContent = err.message || 'Unexpected error occurred.';
+                $('errAlert').style.display = 'flex';
+                $('emptyState').style.display = '';
+            } finally {
+                $('loadingWrap').style.display = 'none';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-play-fill"></i><span>Run Check</span>';
+            }
+        }
 
-        const tr = document.createElement('tr');
-        tr.className = 'row-in';
-        tr.style.animationDelay = `${i * 32}ms`;
-        tr.innerHTML = `
+        function renderResults(data) {
+            const tbody = $('resBody');
+            tbody.innerHTML = '';
+            let rows = Array.isArray(data) ? data : (data && typeof data === 'object' ? Object.values(data) : []);
+            rows = rows.filter(item => item !== null && typeof item === 'object');
+
+            if (!rows.length) { $('emptyState').style.display = ''; return; }
+
+            let live = 0, dead = 0;
+
+            rows.forEach((item, i) => {
+                const isLive = item.live === true;
+                isLive ? live++ : dead++;
+
+                const uid = item.uid || '—';
+                const fbUrl = `https://www.facebook.com/${uid}`;
+
+                const tr = document.createElement('tr');
+                tr.className = 'row-in';
+                tr.style.animationDelay = `${i * 28}ms`;
+                tr.innerHTML = `
           <td class="td-idx">${String(i + 1).padStart(2, '0')}</td>
           <td class="td-uid">
             <a href="${fbUrl}" target="_blank" rel="noopener noreferrer" class="uid-link">${esc(uid)}</a>
           </td>
-          <td class="td-name">${name ? esc(name) : '<span class="name-null">—</span>'}</td>
           <td>
             ${isLive
-              ? `<span class="sbadge sbadge-live"><span class="sdot"></span>LIVE</span>`
-              : `<span class="sbadge sbadge-off"><span class="sdot"></span>Offline</span>`
-            }
+                        ? `<span class="sbadge sbadge-live"><span class="sdot"></span>Live</span>`
+                        : `<span class="sbadge sbadge-dead"><span class="sdot"></span>Dead</span>`
+                    }
           </td>`;
-        tbody.appendChild(tr);
-      });
+                tbody.appendChild(tr);
+            });
 
-      $('liveCount').textContent = `${live} Live`;
-      $('offCount').textContent = `${off} Offline`;
-      $('resWrap').style.display = '';
-      $('resWrap').classList.add('fade-up');
-    }
+            $('liveCount').textContent = `${live} Live`;
+            $('deadCount').textContent = `${dead} Dead`;
+            $('resWrap').style.display = '';
+            $('resWrap').classList.add('fade-up');
+        }
 
-    $('uidInput').addEventListener('keydown', e => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') checkUIDs();
-    });
-  </script>
+        $('uidInput').addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') checkUIDs();
+        });
+    </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
