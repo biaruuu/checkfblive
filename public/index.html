@@ -832,7 +832,7 @@
     function renderResults(data) {
       const tbody = $('resBody');
       tbody.innerHTML = '';
-      const rows = Array.isArray(data) ? data : (data && typeof data === 'object' ? Object.values(data) : []);
+      let rows = Array.isArray(data) ? data : (data && typeof data === 'object' ? Object.values(data) : []);
 
       // Filter out any null / non-object entries from the API response
       rows = rows.filter(item => item !== null && typeof item === 'object');
