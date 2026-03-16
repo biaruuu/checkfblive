@@ -10,136 +10,55 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/api/check', async (req, res) => {
-    try {
-        const { uid } = req.body;
+const HITOOLS_HEADERS = {
+    'Content-Type': 'application/json',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+    Accept: '*/*',
+    Origin: 'https://hitools.pro',
+};
 
-        if (!uid) {
-            return res.status(400).json({ error: 'UID is required' });
-        }
-
-        const response = await axios.post(
-            'https://hitools.pro/api/check-uid-facebook',
-            { uids: [String(uid)] },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'User-Agent':
-                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
-                    Accept: '*/*',
-                    Origin: 'https://hitools.pro',
-                    Referer: 'https://hitools.pro/check-live-uid',
-                },
-                timeout: 15000,
+// Retry helper for 429 rate limits
+async function requestWithRetry(config, retries = 3, delay = 2000) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            return await axios(config);
+        } catch (err) {
+            if (err.response && err.response.status === 429 && i < retries - 1) {
+                console.log(`  ⏳ Rate limited (429). Retrying in ${delay}ms... (${i + 1}/${retries})`);
+                await new Promise(r => setTimeout(r, delay));
+                delay *= 1.5; // exponential backoff
+            } else {
+                throw err;
             }
-        );
-
-        const raw = typeof response.data === 'string' ? response.data : null;
-        let result;
-
-        if (raw) {
-            const firstLine = raw.split('\n').find((l) => l.trim());
-            result = JSON.parse(firstLine);
-        } else {
-            result = response.data;
         }
-
-        return res.json(result);
-    } catch (err) {
-        console.error('Check error:', err.message);
-        return res.status(500).json({ error: 'Failed to check UID', details: err.message });
     }
-});
+}
 
-app.post('/api/check-bulk', async (req, res) => {
-    try {
-        const { uids } = req.body;
-
-        if (!uids || !Array.isArray(uids) || uids.length === 0) {
-            return res.status(400).json({ error: 'uids array is required' });
-        }
-
-        if (uids.length > 50) {
-            return res.status(400).json({ error: 'Maximum 50 UIDs per request' });
-        }
-
-        const response = await axios.post(
-            'https://hitools.pro/api/check-uid-facebook',
-            { uids: uids.map(String) },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'User-Agent':
-                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
-                    Accept: '*/*',
-                    Origin: 'https://hitools.pro',
-                    Referer: 'https://hitools.pro/check-live-uid',
-                },
-                timeout: 30000,
-            }
-        );
-
-        const raw = typeof response.data === 'string' ? response.data : null;
-        let results = [];
-
-        if (raw) {
-            const lines = raw.split('\n').filter((l) => l.trim());
-            results = lines.map((line) => JSON.parse(line));
-        } else if (Array.isArray(response.data)) {
-            results = response.data;
-        } else {
-            results = [response.data];
-        }
-
-        const live = results.filter((r) => r.live === true);
-        const dead = results.filter((r) => r.live === false);
-
-        return res.json({
-            total: results.length,
-            live: live.length,
-            dead: dead.length,
-            results,
-        });
-    } catch (err) {
-        console.error('Bulk check error:', err.message);
-        return res.status(500).json({ error: 'Failed to check UIDs', details: err.message });
-    }
-});
-
+// ─── API: Check UIDs ──────────────────────────────────────────
 app.post('/api/check-uid', async (req, res) => {
     try {
         const { uids } = req.body;
-
         if (!uids || !Array.isArray(uids) || uids.length === 0) {
             return res.status(400).json({ error: 'uids array is required' });
         }
-
         if (uids.length > 50) {
             return res.status(400).json({ error: 'Maximum 50 UIDs per request' });
         }
 
-        const response = await axios.post(
-            'https://hitools.pro/api/check-uid-facebook',
-            { uids: uids.map(String) },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'User-Agent':
-                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
-                    Accept: '*/*',
-                    Origin: 'https://hitools.pro',
-                    Referer: 'https://hitools.pro/check-live-uid',
-                },
-                timeout: 30000,
-            }
-        );
+        const response = await requestWithRetry({
+            method: 'POST',
+            url: 'https://hitools.pro/api/check-uid-facebook',
+            data: { uids: uids.map(String) },
+            headers: { ...HITOOLS_HEADERS, Referer: 'https://hitools.pro/check-live-uid' },
+            timeout: 30000,
+        });
 
         const raw = typeof response.data === 'string' ? response.data : null;
         let results = [];
 
         if (raw) {
-            const lines = raw.split('\n').filter((l) => l.trim());
-            results = lines.map((line) => JSON.parse(line));
+            const lines = raw.split('\n').filter(l => l.trim());
+            results = lines.map(line => JSON.parse(line));
         } else if (Array.isArray(response.data)) {
             results = response.data;
         } else {
@@ -149,18 +68,50 @@ app.post('/api/check-uid', async (req, res) => {
         return res.json({ results });
     } catch (err) {
         console.error('Check-uid error:', err.message);
-        return res.status(500).json({ error: 'Failed to check UIDs', details: err.message });
+        const status = err.response?.status || 500;
+        return res.status(status).json({
+            error: status === 429 ? 'Rate limited. Please wait a moment and try again.' : 'Failed to check UIDs',
+            details: err.message
+        });
     }
 });
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// ─── API: Find Facebook ID ────────────────────────────────────
+app.post('/api/find-facebook-id', async (req, res) => {
+    try {
+        const { url } = req.body;
+        if (!url || typeof url !== 'string') {
+            return res.status(400).json({ error: 'A Facebook URL is required' });
+        }
+
+        const response = await requestWithRetry({
+            method: 'POST',
+            url: 'https://hitools.pro/api/find-facebook-id',
+            data: { url: url.trim() },
+            headers: { ...HITOOLS_HEADERS, Referer: 'https://hitools.pro/find-facebook-id' },
+            timeout: 15000,
+        });
+
+        return res.json(response.data);
+    } catch (err) {
+        console.error('Find-id error:', err.message);
+        const status = err.response?.status || 500;
+        return res.status(status).json({
+            error: status === 429 ? 'Rate limited. Please wait a moment and try again.' : 'Failed to find Facebook ID',
+            details: err.message
+        });
+    }
 });
 
+// ─── Start ────────────────────────────────────────────────────
 app.listen(PORT, () => {
-    console.log(`\n  🚀  FB UID Checker API running at http://localhost:${PORT}\n`);
-    console.log('  Endpoints:');
-    console.log('    POST /api/check       — single UID  { uid: "123" }');
-    console.log('    POST /api/check-bulk  — bulk UIDs   { uids: ["123","456"] }');
-    console.log('    POST /api/check-uid   — UI endpoint { uids: ["123","456"] }\n');
+    console.log(`\n  🚀  KiroTools API running at http://localhost:${PORT}\n`);
+    console.log('  Pages:');
+    console.log('    /                        — Home');
+    console.log('    /check-live-uid.html     — Check Live UID');
+    console.log('    /find-facebook-id.html   — Find Facebook ID');
+    console.log('    /documentation.html      — Documentation');
+    console.log('\n  API:');
+    console.log('    POST /api/check-uid          — { uids: [...] }');
+    console.log('    POST /api/find-facebook-id   — { url: "..." }\n');
 });
