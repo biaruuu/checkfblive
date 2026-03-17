@@ -1,156 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Check Live UID Facebook — KiroTools</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
-<!-- ── TOP NAVBAR ── -->
+<!-- TOPBAR -->
 <nav class="topbar">
   <a href="index.html" class="topbar-logo">
     <svg viewBox="0 0 40 40" fill="none">
-      <path d="M8 8 L20 4 L32 20 L20 36 L8 28 Z" fill="#2563eb" opacity=".15"/>
-      <path d="M12 10 L24 6 L20 22 Z" fill="#2563eb"/>
-      <path d="M20 22 L30 16 L34 32 L20 36 Z" fill="#2563eb" opacity=".7"/>
+      <rect width="40" height="40" rx="9" fill="#18181b"/>
+      <path d="M10 28L20 10L30 28" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M13.5 22H26.5" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
     </svg>
     <span class="topbar-logo-text">KiroTools</span>
   </a>
   <div class="topbar-actions">
-    <button class="tb-icon-btn" title="Search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    </button>
-    <button class="tb-icon-btn" title="Dark mode">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-    <span class="tb-flag" title="English">🇬🇧</span>
     <button class="btn-signin">Sign In</button>
   </div>
 </nav>
 
-<!-- ── SUB NAV ── -->
+<!-- SUBNAV -->
 <div class="subnav">
-  <button class="hamburger js-open-drawer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  <button class="hamburger js-open-drawer" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
   </button>
   <div class="breadcrumb">
     <a href="index.html">Facebook Tools</a>
-    <svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg>
-    <span class="bc-cur">Check Live UID Facebook</span>
+    <svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="m9 18 6-6-6-6"/></svg>
+    <span class="bc-cur">Check Live UID</span>
+  </div>
+  <div class="subnav-search-wrap">
+    <svg class="subnav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" class="subnav-search-input" id="subnavSearch" placeholder="Search tools…" autocomplete="off"/>
+    <div class="search-dropdown" id="searchDropdown"></div>
   </div>
 </div>
 
-<!-- ── OVERLAY + DRAWER ── -->
+<!-- OVERLAY + DRAWER -->
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer">
   <div class="drawer-head">
     <div class="drawer-logo">
-      <svg viewBox="0 0 40 40" fill="none" width="28" height="28">
-        <path d="M8 8 L20 4 L32 20 L20 36 L8 28 Z" fill="#2563eb" opacity=".15"/>
-        <path d="M12 10 L24 6 L20 22 Z" fill="#2563eb"/>
-        <path d="M20 22 L30 16 L34 32 L20 36 Z" fill="#2563eb" opacity=".7"/>
+      <svg viewBox="0 0 40 40" fill="none" width="26" height="26">
+        <rect width="40" height="40" rx="9" fill="#18181b"/>
+        <path d="M10 28L20 10L30 28" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13.5 22H26.5" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
       </svg>
       <span class="drawer-logo-text">KiroTools</span>
     </div>
-    <button class="drawer-close js-close-drawer">
+    <button class="drawer-close js-close-drawer" aria-label="Close menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
   </div>
   <div class="drawer-search">
     <div class="dsearch-wrap">
       <svg class="dsearch-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" class="dsearch-input" id="drawerSearch" placeholder="Search tools…" />
+      <input type="text" class="dsearch-input" id="drawerSearch" placeholder="Search tools…"/>
     </div>
   </div>
   <nav class="drawer-nav">
-    <div class="nav-direct"><a href="index.html" style="color:inherit;text-decoration:none">ALL TOOLS</a></div>
+    <a href="index.html" class="nav-home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      All Tools
+    </a>
     <div class="nav-section">
       <div class="nav-sec-hdr expanded">
-        FACEBOOK TOOLS
+        Facebook Tools
         <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
       </div>
       <div class="nav-items open">
         <a href="check-live-uid.html" class="nav-item active">Check Live UID Facebook</a>
-        <a href="#" class="nav-item">Check Live BM</a>
-        <a href="#" class="nav-item">Check BM Verified</a>
         <a href="find-facebook-id.html" class="nav-item">Find Facebook ID</a>
       </div>
-    </div>
-    <div class="nav-section">
-      <div class="nav-sec-hdr">
-        INSTAGRAM TOOLS
-        <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
-      </div>
-      <div class="nav-items"></div>
-    </div>
-    <div class="nav-section">
-      <div class="nav-sec-hdr">
-        TIKTOK TOOLS
-        <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
-      </div>
-      <div class="nav-items"></div>
-    </div>
-    <div class="nav-section">
-      <div class="nav-sec-hdr">
-        SEO TOOLS
-        <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
-      </div>
-      <div class="nav-items"></div>
     </div>
   </nav>
 </aside>
 
-<!-- ── PAGE ── -->
+<!-- PAGE -->
 <div class="page-wrap">
   <main class="page-content">
 
-    <!-- Tool header -->
     <div class="tool-hdr">
       <div class="tool-icon green">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="m16 11 2 2 4-4" stroke-width="2.5"/></svg>
       </div>
       <div>
         <div class="tool-title">Check Live UID Facebook</div>
-        <div class="tool-subtitle">Check UID status (Facebook account)</div>
+        <div class="tool-subtitle">Check UID status (Facebook account) — up to 50 per batch</div>
       </div>
     </div>
 
     <!-- Input -->
-    <div class="form-group">
-      <label class="form-label">Please enter the UID list (one per line)</label>
+    <div class="form-group" style="margin-bottom:14px">
+      <label class="form-label">Enter UID list (one per line)</label>
       <textarea
         class="form-textarea"
         id="uidInput"
-        placeholder="Example:&#10;100012345678901&#10;100023456789012&#10;100034567890123&#10;..."
+        placeholder="100012345678901&#10;100023456789012&#10;100034567890123"
         rows="6"
-        style="min-height:140px"
+        style="min-height:130px"
       ></textarea>
       <div class="uid-count"><span id="uidCount">0</span> / 50 UIDs</div>
     </div>
 
-    <!-- Progress -->
-    <div class="progress-wrap">
-      <div class="progress-hdr">
-        <span class="progress-pct" id="progressPct">0%</span>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-
     <!-- Buttons -->
     <div class="btn-row">
-      <button class="btn btn-success" id="checkBtn">
-        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <button class="btn btn-dark" id="checkBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         Check
       </button>
       <button class="btn btn-outline" id="resetBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         Reset
       </button>
     </div>
@@ -158,7 +127,7 @@
     <!-- View tabs -->
     <div class="view-tabs">
       <button class="view-tab active" data-mode="uid">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
         UID
       </button>
       <button class="view-tab" data-mode="full">
@@ -175,9 +144,8 @@
       </button>
     </div>
 
-    <!-- Results -->
+    <!-- Result sections -->
     <div class="results-area">
-
       <!-- Live -->
       <div class="result-section">
         <div class="result-sec-hdr">
@@ -187,12 +155,10 @@
           </div>
           <div class="result-actions">
             <button class="btn-sm" id="copyLive">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
             </button>
             <button class="btn-sm" id="exportLive">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Export
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export
             </button>
           </div>
         </div>
@@ -201,7 +167,6 @@
           <textarea class="result-ta" id="liveOutput" style="display:none" readonly></textarea>
         </div>
       </div>
-
       <!-- Dead -->
       <div class="result-section">
         <div class="result-sec-hdr">
@@ -211,12 +176,10 @@
           </div>
           <div class="result-actions">
             <button class="btn-sm" id="copyDead">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
             </button>
             <button class="btn-sm" id="exportDead">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Export
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export
             </button>
           </div>
         </div>
@@ -225,7 +188,6 @@
           <textarea class="result-ta" id="deadOutput" style="display:none" readonly></textarea>
         </div>
       </div>
-
       <!-- Error -->
       <div class="result-section">
         <div class="result-sec-hdr">
@@ -235,12 +197,10 @@
           </div>
           <div class="result-actions">
             <button class="btn-sm" id="copyError">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
             </button>
             <button class="btn-sm" id="exportError">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Export
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export
             </button>
           </div>
         </div>
@@ -249,10 +209,9 @@
           <textarea class="result-ta" id="errorOutput" style="display:none" readonly></textarea>
         </div>
       </div>
+    </div>
 
-    </div><!-- /results-area -->
-
-    <!-- Info Tabs -->
+    <!-- Info tabs -->
     <div class="info-tabs-wrap">
       <div class="info-tabs-hdr">
         <button class="itab-btn active" data-tab="guide">
@@ -272,203 +231,118 @@
           Review
         </button>
       </div>
-
-      <!-- Guide -->
       <div class="itab-panel active" data-panel="guide">
-        <div class="guide-steps">
-          <div class="guide-step">
-            <div class="step-num">1</div>
-            <div class="step-line"></div>
-            <div>
-              <div class="step-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Enter UIDs
-              </div>
-              <div class="step-desc">Enter Facebook User IDs into the text area, one per line. You can enter up to 50 UIDs per batch.</div>
-            </div>
-          </div>
-          <div class="guide-step">
-            <div class="step-num">2</div>
-            <div class="step-line"></div>
-            <div>
-              <div class="step-title">
-                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                Check
-              </div>
-              <div class="step-desc">Click the green <strong>Check</strong> button to verify the live/dead status of each UID.</div>
-            </div>
-          </div>
-          <div class="guide-step">
-            <div class="step-num">3</div>
-            <div class="step-line"></div>
-            <div>
-              <div class="step-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                View Results
-              </div>
-              <div class="step-desc">See results categorized as Live, Dead, or Error. Switch between view modes (UID, Full, Separated, Compact).</div>
-            </div>
-          </div>
-          <div class="guide-step">
-            <div class="step-num">4</div>
-            <div>
-              <div class="step-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Export Data
-              </div>
-              <div class="step-desc">Copy results to clipboard or export as a text file using the Copy and Export buttons.</div>
-            </div>
-          </div>
+        <div class="guide-step">
+          <div class="step-num">1</div><div class="step-line"></div>
+          <div><div class="step-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Enter UIDs</div>
+          <div class="step-desc">Paste Facebook User IDs into the box, one per line. Maximum 50 UIDs per batch.</div></div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">2</div><div class="step-line"></div>
+          <div><div class="step-title"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>Click Check</div>
+          <div class="step-desc">Hit the Check button. The tool will verify each UID's live/dead status in one batch request.</div></div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">3</div><div class="step-line"></div>
+          <div><div class="step-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>View Results</div>
+          <div class="step-desc">Results appear in Live, Dead, and Error sections. Toggle view modes for different output formats.</div></div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">4</div>
+          <div><div class="step-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export Data</div>
+          <div class="step-desc">Copy results to clipboard or export as a .txt file using the buttons on each section.</div></div>
         </div>
       </div>
-
-      <!-- About -->
       <div class="itab-panel" data-panel="about">
         <div class="about-text">
-          <p>The <strong>Check Live UID Facebook</strong> tool allows you to verify the status of Facebook User IDs (UIDs) in bulk. Simply enter UIDs one per line and click Check to see which accounts are live, dead, or returned an error.</p>
-          <p>This tool supports up to 50 UIDs per batch and provides multiple view modes to suit your workflow. Results are clearly categorized so you can easily copy or export each group.</p>
-          <p>Use the view mode buttons to toggle between UID-only, full detail, separated, or compact views of your results.</p>
+          <p>The <strong>Check Live UID Facebook</strong> tool lets you bulk-verify Facebook User IDs in one click. Paste up to 50 UIDs and instantly see which accounts are live, dead, or returned an error.</p>
+          <p>Use the view mode toggles (UID, Full, Separated, Compact) to switch between output formats. Copy or export each result group independently.</p>
         </div>
       </div>
-
-      <!-- FAQ -->
       <div class="itab-panel" data-panel="faq">
         <div class="faq-item">
-          <div class="faq-q">
-            <span class="faq-q-text">What is a Facebook UID?</span>
-            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-          <div class="faq-a"><div class="faq-a-inner">A Facebook UID (User ID) is a unique numeric identifier assigned to every Facebook account. It typically starts with "100" and is 15–16 digits long.</div></div>
+          <div class="faq-q"><span class="faq-q-text">What is a Facebook UID?</span><svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+          <div class="faq-a"><div class="faq-a-inner">A Facebook UID (User ID) is a unique numeric identifier for every Facebook account — typically 15–16 digits starting with "100".</div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">
-            <span class="faq-q-text">How many UIDs can I check at once?</span>
-            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-          <div class="faq-a"><div class="faq-a-inner">You can check up to 50 UIDs per batch. Enter one UID per line in the text area.</div></div>
+          <div class="faq-q"><span class="faq-q-text">How many UIDs can I check at once?</span><svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+          <div class="faq-a"><div class="faq-a-inner">Up to 50 UIDs per batch. Enter one UID per line.</div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">
-            <span class="faq-q-text">What do the status categories mean?</span>
-            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-          <div class="faq-a"><div class="faq-a-inner"><strong>Live</strong> = the account exists and is active. <strong>Dead</strong> = the account has been deactivated or deleted. <strong>Error</strong> = the check could not be completed for that UID.</div></div>
+          <div class="faq-q"><span class="faq-q-text">What do Live / Dead / Error mean?</span><svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+          <div class="faq-a"><div class="faq-a-inner"><strong>Live</strong> = account exists and is active. <strong>Dead</strong> = account deactivated or deleted. <strong>Error</strong> = check failed for that UID (try again).</div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">
-            <span class="faq-q-text">What are the different view modes?</span>
-            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-          <div class="faq-a"><div class="faq-a-inner"><strong>UID</strong> — shows only the UID numbers. <strong>Full</strong> — shows UID with status. <strong>Separated</strong> — groups by status with labels. <strong>Compact</strong> — condensed single-line format.</div></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="faq-q-text">Why do some UIDs show as Error?</span>
-            <svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-          <div class="faq-a"><div class="faq-a-inner">Errors can happen due to network issues, rate limiting, or invalid UID formats. Try re-checking those UIDs after a short wait.</div></div>
+          <div class="faq-q"><span class="faq-q-text">Why do some UIDs show as Error?</span><svg class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+          <div class="faq-a"><div class="faq-a-inner">Errors usually indicate rate limiting or a temporary network issue. Wait a moment and try again.</div></div>
         </div>
       </div>
-
-      <!-- Review -->
       <div class="itab-panel" data-panel="review">
         <div class="review-wrap">
           <div class="review-stars">⭐⭐⭐⭐⭐</div>
           <div class="review-title">Enjoying KiroTools?</div>
-          <div class="review-desc">If this tool has been useful, we'd love your feedback.<br>It helps us keep improving!</div>
+          <div class="review-desc">Your feedback helps us improve.<br>Leave a quick review!</div>
           <button class="btn-review">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             Leave a Review
           </button>
         </div>
       </div>
-
-    </div><!-- /info-tabs-wrap -->
+    </div>
 
   </main>
 </div>
 
-<!-- Toast -->
 <div class="toast-container" id="toastContainer"></div>
-
 <script src="script.js"></script>
 <script>
-// ─── Check Live UID Logic ───────────────────────────────────────
-const uidInput    = document.getElementById('uidInput');
-const uidCount    = document.getElementById('uidCount');
-const checkBtn    = document.getElementById('checkBtn');
-const resetBtn    = document.getElementById('resetBtn');
-const progressPct = document.getElementById('progressPct');
-const progressFill= document.getElementById('progressFill');
-
-const liveCount   = document.getElementById('liveCount');
-const deadCount   = document.getElementById('deadCount');
-const errorCount  = document.getElementById('errorCount');
-const liveOutput  = document.getElementById('liveOutput');
-const deadOutput  = document.getElementById('deadOutput');
-const errorOutput = document.getElementById('errorOutput');
-const liveEmpty   = document.getElementById('liveEmpty');
-const deadEmpty   = document.getElementById('deadEmpty');
-const errorEmpty  = document.getElementById('errorEmpty');
+// ── Check Live UID ───────────────────────────────────────────────
+const uidInput   = document.getElementById('uidInput');
+const uidCount   = document.getElementById('uidCount');
+const checkBtn   = document.getElementById('checkBtn');
+const resetBtn   = document.getElementById('resetBtn');
+const liveCount  = document.getElementById('liveCount');
+const deadCount  = document.getElementById('deadCount');
+const errorCount = document.getElementById('errorCount');
 
 let liveUIDs = [], deadUIDs = [], errorUIDs = [];
 let currentMode = 'uid';
 
-// Live count display
-uidInput.addEventListener('input', () => {
-  const uids = parseUIDs();
-  uidCount.textContent = uids.length;
-  if (uids.length > 50) {
-    uidCount.style.color = 'var(--red)';
-  } else {
-    uidCount.style.color = '';
-  }
-});
+const CHECK_BTN_DEFAULT = `<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>Check`;
 
 function parseUIDs() {
-  return uidInput.value.split('\n')
-    .map(l => l.trim())
-    .filter(l => l.length > 0);
+  return uidInput.value.split('\n').map(l => l.trim()).filter(Boolean);
 }
 
-function setProgress(pct) {
-  progressPct.textContent = pct + '%';
-  progressFill.style.width = pct + '%';
-}
+// Live UID counter
+uidInput.addEventListener('input', () => {
+  const n = parseUIDs().length;
+  uidCount.textContent = n;
+  uidCount.parentElement.className = 'uid-count' + (n > 50 ? ' over' : '');
+});
 
 function renderOutput(arr, mode, el, emptyEl) {
-  if (!arr.length) {
-    el.style.display = 'none';
-    emptyEl.style.display = '';
-    return;
-  }
-  emptyEl.style.display = 'none';
-  el.style.display = 'block';
-
-  if (mode === 'uid') {
-    el.value = arr.map(r => r.uid).join('\n');
-  } else if (mode === 'full') {
-    el.value = arr.map(r => `${r.uid} | ${r.status}`).join('\n');
-  } else if (mode === 'separated') {
-    el.value = arr.map(r => `${r.uid}`).join('\n');
-  } else if (mode === 'compact') {
-    el.value = arr.map(r => r.uid).join(' | ');
-  }
-
-  // Auto-resize
+  if (!arr.length) { el.style.display = 'none'; emptyEl.style.display = ''; return; }
+  emptyEl.style.display = 'none'; el.style.display = 'block';
+  if      (mode === 'uid')       el.value = arr.map(r => r.uid).join('\n');
+  else if (mode === 'full')      el.value = arr.map(r => `${r.uid} | ${r.status}`).join('\n');
+  else if (mode === 'separated') el.value = arr.map(r => r.uid).join('\n');
+  else if (mode === 'compact')   el.value = arr.map(r => r.uid).join(' | ');
   el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 300) + 'px';
+  el.style.height = Math.min(el.scrollHeight, 280) + 'px';
 }
 
 function refreshOutputs() {
-  renderOutput(liveUIDs, currentMode, liveOutput, liveEmpty);
-  renderOutput(deadUIDs, currentMode, deadOutput, deadEmpty);
-  renderOutput(errorUIDs, currentMode, errorOutput, errorEmpty);
+  renderOutput(liveUIDs,  currentMode, document.getElementById('liveOutput'),  document.getElementById('liveEmpty'));
+  renderOutput(deadUIDs,  currentMode, document.getElementById('deadOutput'),  document.getElementById('deadEmpty'));
+  renderOutput(errorUIDs, currentMode, document.getElementById('errorOutput'), document.getElementById('errorEmpty'));
 }
 
 // View tabs
 document.querySelectorAll('.view-tab').forEach(tab => {
   tab.addEventListener('click', () => {
+    document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
     currentMode = tab.dataset.mode;
     refreshOutputs();
   });
@@ -477,50 +351,39 @@ document.querySelectorAll('.view-tab').forEach(tab => {
 // Check
 checkBtn.addEventListener('click', async () => {
   const uids = parseUIDs();
-  if (!uids.length) {
-    showToast('Please enter at least one UID', 'error');
-    return;
-  }
-  if (uids.length > 50) {
-    showToast('Maximum 50 UIDs per batch', 'error');
-    return;
-  }
+  if (!uids.length) return showToast('Please enter at least one UID', 'error');
+  if (uids.length > 50) return showToast('Maximum 50 UIDs per batch', 'error');
 
   liveUIDs = []; deadUIDs = []; errorUIDs = [];
-  liveCount.textContent = 0;
-  deadCount.textContent = 0;
-  errorCount.textContent = 0;
+  liveCount.textContent = deadCount.textContent = errorCount.textContent = 0;
   refreshOutputs();
 
   checkBtn.disabled = true;
-  checkBtn.innerHTML = `<div class="spinner"></div> Checking…`;
-  setProgress(0);
+  checkBtn.innerHTML = LOADER_SVG + ' Checking…';
 
   try {
-    const res = await fetch('/api/check-uid', {
+    const res  = await fetch('/api/check-uid', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uids })
     });
-
     const data = await res.json();
 
-    if (!res.ok) {
-      throw new Error(data.error || 'Request failed');
-    }
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
-    const results = data.results || [];
-    results.forEach((r, i) => {
-      const pct = Math.round(((i + 1) / results.length) * 100);
-      setProgress(pct);
+    const results = Array.isArray(data.results) ? data.results : [];
 
-      const status = (r.status || '').toLowerCase();
-      if (status === 'live' || status === '1' || status === 'active') {
-        liveUIDs.push(r);
-      } else if (status === 'dead' || status === '0' || status === 'inactive' || status === 'not found') {
-        deadUIDs.push(r);
+    results.forEach(r => {
+      // Normalise — hitools may return uid as number or string
+      const uid    = String(r.uid || r.id || '');
+      const status = String(r.status || r.live || '').toLowerCase();
+
+      if (status === 'live' || status === '1' || status === 'true' || status === 'active') {
+        liveUIDs.push({ uid, status: 'live' });
+      } else if (status === 'die' || status === 'dead' || status === '0' || status === 'false' || status === 'inactive' || status === 'not found') {
+        deadUIDs.push({ uid, status: 'dead' });
       } else {
-        errorUIDs.push({ uid: r.uid || r, status: r.status || 'unknown' });
+        errorUIDs.push({ uid, status: status || 'unknown' });
       }
     });
 
@@ -528,14 +391,13 @@ checkBtn.addEventListener('click', async () => {
     deadCount.textContent  = deadUIDs.length;
     errorCount.textContent = errorUIDs.length;
     refreshOutputs();
-    showToast(`Done! ${liveUIDs.length} live, ${deadUIDs.length} dead, ${errorUIDs.length} error`, 'success');
+    showToast(`Done! ${liveUIDs.length} live · ${deadUIDs.length} dead · ${errorUIDs.length} error`, 'success');
 
   } catch (err) {
-    showToast(err.message || 'Error checking UIDs', 'error');
-    setProgress(0);
+    showToast(err.message || 'Failed to check UIDs', 'error');
   } finally {
     checkBtn.disabled = false;
-    checkBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg> Check`;
+    checkBtn.innerHTML = CHECK_BTN_DEFAULT;
   }
 });
 
@@ -543,41 +405,39 @@ checkBtn.addEventListener('click', async () => {
 resetBtn.addEventListener('click', () => {
   uidInput.value = '';
   uidCount.textContent = 0;
+  uidCount.parentElement.className = 'uid-count';
   liveUIDs = []; deadUIDs = []; errorUIDs = [];
-  liveCount.textContent = 0;
-  deadCount.textContent = 0;
-  errorCount.textContent = 0;
-  setProgress(0);
+  liveCount.textContent = deadCount.textContent = errorCount.textContent = 0;
   refreshOutputs();
   showToast('Reset!', 'info');
 });
 
-// Copy buttons
+// Copy / Export
+function getOutput(id) { return document.getElementById(id).value; }
+
 document.getElementById('copyLive').addEventListener('click', () => {
   if (!liveUIDs.length) return showToast('No live UIDs to copy', 'error');
-  copyToClipboard(liveOutput.value, 'Live UIDs copied');
+  copyToClipboard(getOutput('liveOutput'), 'Live UIDs copied');
 });
 document.getElementById('copyDead').addEventListener('click', () => {
   if (!deadUIDs.length) return showToast('No dead UIDs to copy', 'error');
-  copyToClipboard(deadOutput.value, 'Dead UIDs copied');
+  copyToClipboard(getOutput('deadOutput'), 'Dead UIDs copied');
 });
 document.getElementById('copyError').addEventListener('click', () => {
   if (!errorUIDs.length) return showToast('No error UIDs to copy', 'error');
-  copyToClipboard(errorOutput.value, 'Error UIDs copied');
+  copyToClipboard(getOutput('errorOutput'), 'Error UIDs copied');
 });
-
-// Export buttons
 document.getElementById('exportLive').addEventListener('click', () => {
   if (!liveUIDs.length) return showToast('No live UIDs to export', 'error');
-  exportAsText(liveOutput.value, 'live-uids.txt');
+  exportAsText(getOutput('liveOutput'), 'live-uids.txt');
 });
 document.getElementById('exportDead').addEventListener('click', () => {
   if (!deadUIDs.length) return showToast('No dead UIDs to export', 'error');
-  exportAsText(deadOutput.value, 'dead-uids.txt');
+  exportAsText(getOutput('deadOutput'), 'dead-uids.txt');
 });
 document.getElementById('exportError').addEventListener('click', () => {
   if (!errorUIDs.length) return showToast('No error UIDs to export', 'error');
-  exportAsText(errorOutput.value, 'error-uids.txt');
+  exportAsText(getOutput('errorOutput'), 'error-uids.txt');
 });
 </script>
 </body>
