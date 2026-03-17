@@ -103,6 +103,39 @@ app.post('/api/find-facebook-id', async (req, res) => {
     }
 });
 
+
+// ─── API: Find Facebook Post ID ───────────────────────────────
+app.post('/api/find-post-id', async (req, res) => {
+    try {
+        const { url } = req.body;
+        if (!url || typeof url !== 'string') {
+            return res.status(400).json({ error: 'A Facebook post URL is required' });
+        }
+
+        const response = await requestWithRetry({
+            method: 'POST',
+            url: 'https://id.traodoisub.com/api.php',
+            data: `link=${encodeURIComponent(url.trim())}`,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            timeout: 10000,
+        });
+
+        const postId = response.data?.id || null;
+        if (!postId) {
+            return res.status(404).json({ error: 'Post ID not found. The post may be private or the URL is unsupported.' });
+        }
+
+        return res.json({ postId });
+    } catch (err) {
+        console.error('Find-post-id error:', err.message);
+        const status = err.response?.status || 500;
+        return res.status(status).json({
+            error: status === 429 ? 'Rate limited. Please wait a moment and try again.' : 'Failed to find Post ID',
+            details: err.message
+        });
+    }
+});
+
 // ─── Start ────────────────────────────────────────────────────
 app.listen(PORT, () => {
     console.log(`\n  🚀  KiroTools API running at http://localhost:${PORT}\n`);
