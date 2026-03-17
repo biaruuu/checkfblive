@@ -6,6 +6,7 @@
 <title>Find Facebook ID — KiroTools</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css"/>
 </head>
@@ -13,10 +14,9 @@
 
 <nav class="topbar">
   <a href="index.html" class="topbar-logo">
-    <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/></svg></div>
-    <span class="logo-text">KiroTools</span>
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/></svg></div>
+    <span class="logo-name">KiroTools</span>
   </a>
-  <div class="topbar-spacer"></div>
   <button class="btn-signin">Sign In</button>
 </nav>
 
@@ -30,20 +30,20 @@
     <span class="bc-cur">Find Facebook ID</span>
   </div>
   <div class="snav-search">
-    <svg class="snav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <svg class="snav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input class="snav-input" id="snavInput" placeholder="Search tools…" autocomplete="off"/>
-    <div class="search-drop" id="snavDrop"></div>
+    <div class="sdrop" id="snavDrop"></div>
   </div>
-  <button class="snav-search-btn" id="mobSearchBtn" aria-label="Search">
+  <button class="mob-s-btn" id="mobSearchBtn" aria-label="Search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
   </button>
 </div>
 
-<div class="mobile-search-bar" id="mobSearchBar">
-  <div class="mobile-search-inner">
-    <svg class="mob-s-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input class="mob-s-input" id="mobInput" placeholder="Search tools…" autocomplete="off"/>
-    <div class="mob-s-drop" id="mobDrop"></div>
+<div class="mob-search-bar" id="mobSearchBar">
+  <div class="mob-si">
+    <svg class="mob-si-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="mob-si-input" id="mobInput" placeholder="Search tools…" autocomplete="off"/>
+    <div class="mob-sdrop" id="mobDrop"></div>
   </div>
 </div>
 
@@ -51,18 +51,18 @@
 <aside class="drawer" id="drawer">
   <div class="drawer-head">
     <div class="d-logo">
-      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/></svg></div>
-      <span class="d-logo-text">KiroTools</span>
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/></svg></div>
+      <span class="d-logo-txt">KiroTools</span>
     </div>
-    <button class="drawer-close js-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <button class="d-close js-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
-  <div class="drawer-search">
+  <div class="d-search">
     <div class="ds-wrap">
       <svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input class="ds-input" id="dsInput" placeholder="Search tools…"/>
     </div>
   </div>
-  <nav class="drawer-nav">
+  <nav class="d-nav">
     <a href="index.html" class="nav-home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       All Tools
@@ -85,94 +85,39 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     </div>
     <div>
-      <div class="t-title">Find Facebook ID</div>
-      <div class="t-sub">Find Facebook IDs from any profile, group, page or post URL</div>
+      <div class="t-name">Find Facebook ID</div>
+      <div class="t-sub">Find numeric Facebook IDs from any profile or group URL</div>
     </div>
   </div>
 
-  <!-- Single mode -->
-  <div id="singleWrap">
-    <div class="card" style="margin-bottom:10px">
-      <div class="card-body">
-        <div class="frow" style="margin-bottom:6px">
-          <label class="flabel" style="margin-bottom:0">Facebook URL or Username</label>
-          <button class="btn-pill" id="bulkToggle">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Bulk
-          </button>
-        </div>
-        <input type="text" class="finput" id="urlInput" placeholder="e.g.  cristiano  or  https://facebook.com/zuck"/>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-black" id="findBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        Find Facebook ID
-      </button>
-      <button class="btn btn-ghost" id="resetSingle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-        Reset
-      </button>
+  <!-- Input card -->
+  <div class="card">
+    <div class="card-body">
+      <label class="flabel">Enter Facebook URL</label>
+      <input type="text" class="finput" id="urlInput" placeholder="e.g. https://facebook.com/cristiano" autocomplete="off"/>
     </div>
   </div>
 
-  <!-- Bulk mode -->
-  <div id="bulkWrap" style="display:none">
-    <div class="card" style="margin-bottom:10px">
-      <div class="card-body">
-        <div class="frow" style="margin-bottom:6px">
-          <label class="flabel" style="margin-bottom:0">Facebook URLs (one per line)</label>
-          <button class="btn-pill on" id="bulkToggle2">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Bulk
-          </button>
-        </div>
-        <textarea class="ftextarea" id="bulkInput" placeholder="https://facebook.com/cristiano&#10;zuck&#10;https://facebook.com/groups/example" rows="5" style="min-height:110px"></textarea>
-        <div class="counter" id="urlCounter">0 URLs</div>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-black" id="findAllBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        Find All IDs
-      </button>
-      <button class="btn btn-ghost" id="resetBulk">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-        Reset
-      </button>
-    </div>
-  </div>
-
-  <!-- Single result: dark card showing just the ID -->
-  <div class="id-result" id="idResult">
-    <div class="id-label">Facebook ID</div>
-    <div class="id-value" id="idValue">—</div>
-    <button class="id-copy-btn" id="copyId">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      Copy ID
+  <!-- Actions -->
+  <div class="btn-row">
+    <button class="btn btn-dark" id="findBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Find Facebook ID
+    </button>
+    <button class="btn btn-ghost" id="resetBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+      Reset
     </button>
   </div>
 
-  <!-- Bulk results -->
-  <div class="buckets" id="bulkArea" style="display:none">
-    <div class="bucket">
-      <div class="bucket-hdr">
-        <div class="bucket-title live">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-          Results <span class="badge g" id="bulkBadge">0</span>
-        </div>
-        <div class="bucket-acts">
-          <button class="btn-xs" id="copyBulk">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
-          </button>
-          <button class="btn-xs" id="expBulk">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export
-          </button>
-        </div>
-      </div>
-      <div class="bucket-body">
-        <div class="empty" id="bulkEmpty">No results yet</div>
-        <textarea class="out-ta" id="bulkOut" style="display:none" readonly></textarea>
-      </div>
-    </div>
+  <!-- Result: dark card with the UID prominently displayed -->
+  <div class="id-card" id="idCard">
+    <div class="id-lbl">Facebook ID</div>
+    <div class="id-val" id="idVal">—</div>
+    <button class="id-copy" id="copyId">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy ID
+    </button>
   </div>
 
   <!-- Info tabs -->
@@ -184,21 +129,18 @@
       <button class="itab" data-tab="review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Review</button>
     </div>
     <div class="ipanel on" data-panel="guide">
-      <div class="guide">
-        <div class="gstep"><div class="gnum">1</div><div class="gline"></div><div><div class="g-title">Copy the URL</div><div class="g-desc">Copy a Facebook Profile, Group, Page, or Post URL from your browser. You can also type just a username.</div></div></div>
-        <div class="gstep"><div class="gnum">2</div><div class="gline"></div><div><div class="g-title">Paste &amp; Find</div><div class="g-desc">Paste into the input and click Find Facebook ID. The numeric ID appears instantly.</div></div></div>
-        <div class="gstep"><div class="gnum">3</div><div class="gline"></div><div><div class="g-title">Bulk Mode</div><div class="g-desc">Toggle Bulk to look up multiple URLs at once — one per line.</div></div></div>
-        <div class="gstep"><div class="gnum">4</div><div><div class="g-title">Copy ID</div><div class="g-desc">Click Copy ID to copy the result directly to your clipboard.</div></div></div>
-      </div>
+      <div class="gstep"><div class="gnum">1</div><div class="gline"></div><div><div class="g-ttl">Copy the URL</div><div class="g-dsc">Copy a Facebook Profile, Group, or Page URL from your browser address bar.</div></div></div>
+      <div class="gstep"><div class="gnum">2</div><div class="gline"></div><div><div class="g-ttl">Paste & Search</div><div class="g-dsc">Paste into the input field and click Find Facebook ID.</div></div></div>
+      <div class="gstep"><div class="gnum">3</div><div><div class="g-ttl">Copy the ID</div><div class="g-dsc">The numeric Facebook ID appears. Click Copy ID to copy it instantly.</div></div></div>
     </div>
     <div class="ipanel" data-panel="about">
-      <p class="about-p">The <strong>Find Facebook ID</strong> tool retrieves the numeric ID behind any Facebook profile, group, page, or post URL. Just paste a URL or username and get the ID instantly.</p>
-      <p class="about-p">Use Bulk Mode to look up multiple IDs at once. Export results as a .txt file or copy to clipboard.</p>
+      <p class="about-p">The <strong>Find Facebook ID</strong> tool retrieves the numeric ID behind any Facebook profile, group, or page URL. Paste a URL and get the ID instantly.</p>
+      <p class="about-p">Useful for API integrations, ad targeting, and data exports that require numeric Facebook IDs.</p>
     </div>
     <div class="ipanel" data-panel="faq">
-      <div class="faq"><div class="faq-q"><span class="faq-qt">What URL types are supported?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Profile, Group, Page, and Post URLs. You can also enter just a username (e.g. <code>cristiano</code>).</div></div></div>
-      <div class="faq"><div class="faq-q"><span class="faq-qt">Can I look up multiple IDs at once?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Yes — enable Bulk Mode and enter one URL per line.</div></div></div>
-      <div class="faq"><div class="faq-q"><span class="faq-qt">Why might a lookup fail?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Private profiles, malformed URLs, or rate limiting. Wait a moment and retry.</div></div></div>
+      <div class="faq"><div class="faq-q"><span class="faq-qt">What URL types are supported?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Profile, Group, and Page URLs. You can also enter a username directly (e.g. <code>cristiano</code>).</div></div></div>
+      <div class="faq"><div class="faq-q"><span class="faq-qt">Why might a lookup fail?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Private profiles, malformed URLs, or temporary rate limiting. Wait a moment and retry.</div></div></div>
+      <div class="faq"><div class="faq-q"><span class="faq-qt">What is the API response format?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">The server returns <code>{"success":true,"uid":"12345"}</code> — the numeric UID is in the <code>uid</code> field.</div></div></div>
     </div>
     <div class="ipanel" data-panel="review">
       <div class="rev">
@@ -213,51 +155,27 @@
 </main>
 </div>
 
-<div class="toasts" id="toasts"></div>
 <script src="script.js"></script>
 <script>
 /* ═══════════════════════════════════════════
-   FIND FACEBOOK ID — Main Logic
+   FIND FACEBOOK ID
+   API response: {"success":true,"uid":"12345"}
 ═══════════════════════════════════════════ */
-const urlInput   = document.getElementById('urlInput');
-const bulkInput  = document.getElementById('bulkInput');
-const findBtn    = document.getElementById('findBtn');
-const findAllBtn = document.getElementById('findAllBtn');
-const singleWrap = document.getElementById('singleWrap');
-const bulkWrap   = document.getElementById('bulkWrap');
-const idResult   = document.getElementById('idResult');
-const bulkArea   = document.getElementById('bulkArea');
+const urlInput = document.getElementById('urlInput');
+const findBtn  = document.getElementById('findBtn');
+const resetBtn = document.getElementById('resetBtn');
+const idCard   = document.getElementById('idCard');
+const idVal    = document.getElementById('idVal');
 
-let isBulk    = false;
-let bulkData  = [];
+const BTN_DEFAULT = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Find Facebook ID`;
 
-const FIND_DEFAULT    = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Find Facebook ID`;
-const FINDALL_DEFAULT = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Find All IDs`;
-
-/* ── Mode toggle ── */
-function setMode(bulk) {
-  isBulk = bulk;
-  singleWrap.style.display = bulk ? 'none' : '';
-  bulkWrap.style.display   = bulk ? '' : 'none';
-  idResult.classList.remove('show');
-  bulkArea.style.display   = 'none';
-}
-document.getElementById('bulkToggle').addEventListener('click',  () => setMode(true));
-document.getElementById('bulkToggle2').addEventListener('click', () => setMode(false));
-
-bulkInput.addEventListener('input', () => {
-  document.getElementById('urlCounter').textContent =
-    bulkInput.value.split('\n').filter(l => l.trim()).length + ' URLs';
-});
-
-/* ── Single find ── */
 findBtn.addEventListener('click', async () => {
   const url = urlInput.value.trim();
-  if (!url) return toast('Please enter a URL or username', 'error');
+  if (!url) return showToast('Please enter a Facebook URL', 'error');
 
   findBtn.disabled = true;
   findBtn.innerHTML = GEIST + ' Finding…';
-  idResult.classList.remove('show');
+  idCard.classList.remove('show');
 
   try {
     const res  = await fetch('/api/find-facebook-id', {
@@ -268,98 +186,39 @@ findBtn.addEventListener('click', async () => {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
 
-    // Show just the ID
-    const id = String(data.id || data.uid || '—');
-    document.getElementById('idValue').textContent = id;
-    idResult.classList.add('show');
-    toast('ID found!', 'success');
+    /*
+     *  Response: {"success":true,"uid":"22130498"}
+     *  We extract the uid field
+     */
+    if (data.success === false) throw new Error(data.error || 'Lookup failed');
+
+    const id = String(data.uid ?? data.id ?? '').trim();
+    if (!id) throw new Error('No ID returned from server');
+
+    idVal.textContent = id;
+    idCard.classList.add('show');
+    showToast('ID found!', 'success');
 
   } catch (err) {
-    toast(err.message || 'Failed to find ID', 'error');
+    console.error(err);
+    showToast(err.message || 'Failed to find ID', 'error');
   } finally {
     findBtn.disabled = false;
-    findBtn.innerHTML = FIND_DEFAULT;
+    findBtn.innerHTML = BTN_DEFAULT;
   }
 });
 
-/* ── Copy ID button ── */
+resetBtn.addEventListener('click', () => {
+  urlInput.value = '';
+  idCard.classList.remove('show');
+  showToast('Reset!', 'info');
+});
+
 document.getElementById('copyId').addEventListener('click', () => {
-  const id = document.getElementById('idValue').textContent;
+  const id = idVal.textContent;
   if (id && id !== '—') clip(id, 'ID copied');
 });
 
-/* ── Bulk find ── */
-findAllBtn.addEventListener('click', async () => {
-  const lines = bulkInput.value.split('\n').map(l => l.trim()).filter(Boolean);
-  if (!lines.length) return toast('Please enter at least one URL', 'error');
-
-  findAllBtn.disabled = true;
-  findAllBtn.innerHTML = GEIST + ' Finding…';
-  bulkData = [];
-  bulkArea.style.display = '';
-  document.getElementById('bulkEmpty').style.display = '';
-  document.getElementById('bulkOut').style.display   = 'none';
-  document.getElementById('bulkBadge').textContent   = 0;
-
-  for (const url of lines) {
-    try {
-      const res  = await fetch('/api/find-facebook-id', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url })
-      });
-      const data = await res.json();
-      const id = res.ok ? String(data.id || data.uid || 'ERROR') : 'ERROR';
-      bulkData.push({ url, id });
-    } catch {
-      bulkData.push({ url, id: 'ERROR' });
-    }
-    document.getElementById('bulkBadge').textContent = bulkData.length;
-  }
-
-  // Output: just the IDs (one per line)
-  const out   = document.getElementById('bulkOut');
-  const empty = document.getElementById('bulkEmpty');
-  const ids   = bulkData.map(r => r.id).join('\n');
-
-  empty.style.display = 'none';
-  out.style.display   = 'block';
-  out.value = ids;
-  out.style.height = 'auto';
-  out.style.height = Math.min(out.scrollHeight, 260) + 'px';
-
-  const ok = bulkData.filter(r => r.id !== 'ERROR').length;
-  toast(`Done! ${ok} IDs found`, 'success');
-
-  findAllBtn.disabled = false;
-  findAllBtn.innerHTML = FINDALL_DEFAULT;
-});
-
-/* ── Resets ── */
-document.getElementById('resetSingle').addEventListener('click', () => {
-  urlInput.value = '';
-  idResult.classList.remove('show');
-  toast('Reset!', 'info');
-});
-document.getElementById('resetBulk').addEventListener('click', () => {
-  bulkInput.value = '';
-  document.getElementById('urlCounter').textContent = '0 URLs';
-  bulkData = [];
-  bulkArea.style.display = 'none';
-  toast('Reset!', 'info');
-});
-
-/* ── Copy / Export bulk ── */
-document.getElementById('copyBulk').addEventListener('click', () => {
-  if (!bulkData.length) return toast('No results', 'error');
-  clip(document.getElementById('bulkOut').value, 'IDs copied');
-});
-document.getElementById('expBulk').addEventListener('click', () => {
-  if (!bulkData.length) return toast('No results', 'error');
-  save(document.getElementById('bulkOut').value, 'facebook-ids.txt');
-});
-
-/* ── Enter key ── */
 urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') findBtn.click() });
 </script>
 </body>
