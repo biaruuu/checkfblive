@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KiroTools</title>
+<title>KiroTools — Facebook Tools</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css"/>
 </head>
@@ -13,14 +14,11 @@
 
 <nav class="topbar">
   <a href="index.html" class="topbar-logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/>
-      </svg>
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/></svg>
     </div>
-    <span class="logo-text">KiroTools</span>
+    <span class="logo-name">KiroTools</span>
   </a>
-  <div class="topbar-spacer"></div>
   <button class="btn-signin">Sign In</button>
 </nav>
 
@@ -30,20 +28,20 @@
   </button>
   <div class="breadcrumb"><span class="bc-cur">All Tools</span></div>
   <div class="snav-search">
-    <svg class="snav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <svg class="snav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input class="snav-input" id="snavInput" placeholder="Search tools…" autocomplete="off"/>
-    <div class="search-drop" id="snavDrop"></div>
+    <div class="sdrop" id="snavDrop"></div>
   </div>
-  <button class="snav-search-btn" id="mobSearchBtn" aria-label="Search">
+  <button class="mob-s-btn" id="mobSearchBtn" aria-label="Search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
   </button>
 </div>
 
-<div class="mobile-search-bar" id="mobSearchBar">
-  <div class="mobile-search-inner">
-    <svg class="mob-s-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input class="mob-s-input" id="mobInput" placeholder="Search tools…" autocomplete="off"/>
-    <div class="mob-s-drop" id="mobDrop"></div>
+<div class="mob-search-bar" id="mobSearchBar">
+  <div class="mob-si">
+    <svg class="mob-si-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="mob-si-input" id="mobInput" placeholder="Search tools…" autocomplete="off"/>
+    <div class="mob-sdrop" id="mobDrop"></div>
   </div>
 </div>
 
@@ -51,18 +49,18 @@
 <aside class="drawer" id="drawer">
   <div class="drawer-head">
     <div class="d-logo">
-      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/></svg></div>
-      <span class="d-logo-text">KiroTools</span>
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/></svg></div>
+      <span class="d-logo-txt">KiroTools</span>
     </div>
-    <button class="drawer-close js-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <button class="d-close js-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
-  <div class="drawer-search">
+  <div class="d-search">
     <div class="ds-wrap">
       <svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input class="ds-input" id="dsInput" placeholder="Search tools…"/>
     </div>
   </div>
-  <nav class="drawer-nav">
+  <nav class="d-nav">
     <a href="index.html" class="nav-home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       All Tools
@@ -81,7 +79,6 @@
 <main class="wrap">
 
   <div class="hero">
-    <div class="hero-badge">⚡ Free Facebook Tools</div>
     <h1 class="hero-h1">Welcome to KiroTools</h1>
     <p class="hero-p">Fast, free Facebook tools — check live UIDs, find Facebook IDs, and more.</p>
   </div>
@@ -110,7 +107,7 @@
       </div>
       <div class="tc-info">
         <div class="tc-name">Find Facebook ID</div>
-        <div class="tc-desc">Find Facebook IDs from profile, group, page or post URL</div>
+        <div class="tc-desc">Find Facebook numeric IDs from any profile or group URL</div>
       </div>
       <svg class="tc-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
     </a>
@@ -133,7 +130,6 @@
 </main>
 </div>
 
-<div class="toasts" id="toasts"></div>
 <script src="script.js"></script>
 </body>
 </html>
