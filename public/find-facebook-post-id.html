@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Find Facebook Post ID — KiroTools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/>
+      </svg>
+    </div>
+    <span class="logo-name">KiroTools</span>
+  </a>
+  <button class="btn-signin">Sign In</button>
+</nav>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <button class="hamburger js-open" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div class="breadcrumb">
+    <a href="index.html">Facebook Tools</a>
+    <svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><path d="m9 18 6-6-6-6"/></svg>
+    <span class="bc-cur">Find Facebook Post ID</span>
+  </div>
+  <div class="snav-search">
+    <svg class="snav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="snav-input" id="snavInput" placeholder="Search tools…" autocomplete="off"/>
+    <div class="sdrop" id="snavDrop"></div>
+  </div>
+  <button class="mob-s-btn" id="mobSearchBtn" aria-label="Search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  </button>
+</div>
+
+<!-- MOBILE SEARCH BAR -->
+<div class="mob-search-bar" id="mobSearchBar">
+  <div class="mob-si">
+    <svg class="mob-si-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="mob-si-input" id="mobInput" placeholder="Search tools…" autocomplete="off"/>
+    <div class="mob-sdrop" id="mobDrop"></div>
+  </div>
+</div>
+
+<!-- OVERLAY + DRAWER -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="d-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L4 20h16L12 2z"/><path d="M8 14h8"/>
+        </svg>
+      </div>
+      <span class="d-logo-txt">KiroTools</span>
+    </div>
+    <button class="d-close js-close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="d-search">
+    <div class="ds-wrap">
+      <svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="ds-input" id="dsInput" placeholder="Search tools…"/>
+    </div>
+  </div>
+  <nav class="d-nav">
+    <a href="index.html" class="nav-home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      All Tools
+    </a>
+    <div class="nav-sec">
+      <div class="nav-sec-hdr exp">
+        Facebook Tools
+        <svg class="nav-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <div class="nav-list open">
+        <a href="check-live-uid.html" class="nav-link">Check Live UID Facebook</a>
+        <a href="find-facebook-id.html" class="nav-link">Find Facebook ID</a>
+        <a href="find-facebook-post-id.html" class="nav-link on">Find Facebook Post ID</a>
+      </div>
+    </div>
+  </nav>
+</aside>
+
+<!-- PAGE -->
+<div class="page" id="mainPage">
+<main class="wrap">
+
+  <!-- Tool header -->
+  <div class="tool-top">
+    <div class="tool-ico k">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </div>
+    <div>
+      <div class="t-name">Find Facebook Post ID</div>
+      <div class="t-sub">Extract numeric Post IDs from any Facebook post URL</div>
+    </div>
+  </div>
+
+  <!-- Input card -->
+  <div class="card">
+    <div class="card-body">
+      <label class="flabel">Enter Facebook Post URL</label>
+      <input
+        type="text"
+        class="finput"
+        id="postUrlInput"
+        placeholder="e.g. https://facebook.com/username/posts/123456789"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="btn-row">
+    <button class="btn btn-dark" id="findBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      Find Post ID
+    </button>
+    <button class="btn btn-ghost" id="resetBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+      Reset
+    </button>
+  </div>
+
+  <!-- Result: dark card showing Post ID -->
+  <div class="id-card" id="idCard">
+    <div class="id-lbl">Facebook Post ID</div>
+    <div class="id-val" id="idVal">—</div>
+    <button class="id-copy" id="copyId">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+      Copy Post ID
+    </button>
+  </div>
+
+  <!-- Info tabs -->
+  <div class="itabs">
+    <div class="itabs-hdr">
+      <button class="itab on" data-tab="guide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        Guide
+      </button>
+      <button class="itab" data-tab="about">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        About
+      </button>
+      <button class="itab" data-tab="faq">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        FAQ
+      </button>
+      <button class="itab" data-tab="review">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        Review
+      </button>
+    </div>
+
+    <!-- Guide panel -->
+    <div class="ipanel on" data-panel="guide">
+      <div class="gstep">
+        <div class="gnum">1</div>
+        <div class="gline"></div>
+        <div>
+          <div class="g-ttl">Open the Facebook post</div>
+          <div class="g-dsc">Navigate to any Facebook post — from a profile, group, page, or shared content.</div>
+        </div>
+      </div>
+      <div class="gstep">
+        <div class="gnum">2</div>
+        <div class="gline"></div>
+        <div>
+          <div class="g-ttl">Copy the post URL</div>
+          <div class="g-dsc">Click the post timestamp or three-dot menu → Copy link. Then paste the full URL into the input field.</div>
+        </div>
+      </div>
+      <div class="gstep">
+        <div class="gnum">3</div>
+        <div class="gline"></div>
+        <div>
+          <div class="g-ttl">Click Find Post ID</div>
+          <div class="g-dsc">Hit the button and the numeric Post ID will appear instantly in the result card below.</div>
+        </div>
+      </div>
+      <div class="gstep">
+        <div class="gnum">4</div>
+        <div>
+          <div class="g-ttl">Copy the ID</div>
+          <div class="g-dsc">Click <strong>Copy Post ID</strong> to copy the numeric ID directly to your clipboard.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About panel -->
+    <div class="ipanel" data-panel="about">
+      <p class="about-p">The <strong>Find Facebook Post ID</strong> tool extracts the unique numeric ID from any Facebook post URL — whether it's from a profile, group, page, or shared post.</p>
+      <p class="about-p">Post IDs are useful for Facebook Graph API calls, ad targeting, embedding posts, and tracking content programmatically.</p>
+      <p class="about-p">Powered by <span style="font-family:'Courier New',monospace;font-size:12.5px;background:var(--z-100);padding:1px 5px;border-radius:3px">id.traodoisub.com</span> — a public extraction API.</p>
+    </div>
+
+    <!-- FAQ panel -->
+    <div class="ipanel" data-panel="faq">
+      <div class="faq">
+        <div class="faq-q">
+          <span class="faq-qt">What types of post URLs are supported?</span>
+          <svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">
+          <div class="faq-at">Profile posts, group posts, page posts, and shared posts. The URL can be in any standard Facebook format including <code>facebook.com/permalink</code>, <code>/posts/</code>, and <code>/photo/</code> style links.</div>
+        </div>
+      </div>
+      <div class="faq">
+        <div class="faq-q">
+          <span class="faq-qt">Where can I find the post URL?</span>
+          <svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">
+          <div class="faq-at">Click the timestamp of the post (e.g. "3 hours ago") — your browser will navigate to the post's direct URL. You can also tap the three-dot menu on the post and choose "Copy link".</div>
+        </div>
+      </div>
+      <div class="faq">
+        <div class="faq-q">
+          <span class="faq-qt">What is a Post ID used for?</span>
+          <svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">
+          <div class="faq-at">Post IDs are needed for Facebook Graph API calls, embedding posts on websites, ad reporting, and any automation that references specific Facebook posts.</div>
+        </div>
+      </div>
+      <div class="faq">
+        <div class="faq-q">
+          <span class="faq-qt">Why might a lookup fail?</span>
+          <svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">
+          <div class="faq-at">Private or friends-only posts, malformed URLs, or temporary service issues can cause failures. Make sure the post is publicly accessible and the URL is complete.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review panel -->
+    <div class="ipanel" data-panel="review">
+      <div class="rev">
+        <div class="rev-stars">⭐⭐⭐⭐⭐</div>
+        <div class="rev-title">Enjoying KiroTools?</div>
+        <div class="rev-desc">Your feedback helps us keep improving!</div>
+        <button class="rev-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          Leave a Review
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /itabs -->
+
+</main>
+</div><!-- /page -->
+
+<script src="script.js"></script>
+<script>
+/* ═══════════════════════════════════════════════
+   FIND FACEBOOK POST ID
+   Calls: POST /api/find-post-id  { url: "..." }
+   Response from traodoisub: { id: "123456789" }
+   Server wraps it: { postId: "123456789" }
+═══════════════════════════════════════════════ */
+const postUrlInput = document.getElementById('postUrlInput');
+const findBtn      = document.getElementById('findBtn');
+const resetBtn     = document.getElementById('resetBtn');
+const idCard       = document.getElementById('idCard');
+const idVal        = document.getElementById('idVal');
+
+const BTN_DEFAULT = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Find Post ID`;
+
+findBtn.addEventListener('click', async () => {
+  const url = postUrlInput.value.trim();
+  if (!url) return showToast('Please enter a Facebook post URL', 'error');
+  if (!url.includes('facebook.com')) return showToast('Please enter a valid Facebook URL', 'error');
+
+  findBtn.disabled = true;
+  findBtn.innerHTML = GEIST + ' Finding…';
+  idCard.classList.remove('show');
+
+  try {
+    const res  = await fetch('/api/find-post-id', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
+
+    // Server returns { postId: "..." } — extract it
+    const id = String(data.postId ?? data.id ?? '').trim();
+    if (!id) throw new Error('No Post ID returned. The post may be private or the URL is unsupported.');
+
+    idVal.textContent = id;
+    idCard.classList.add('show');
+    showToast('Post ID found!', 'success');
+
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || 'Failed to extract Post ID', 'error');
+  } finally {
+    findBtn.disabled = false;
+    findBtn.innerHTML = BTN_DEFAULT;
+  }
+});
+
+resetBtn.addEventListener('click', () => {
+  postUrlInput.value = '';
+  idCard.classList.remove('show');
+  showToast('Reset!', 'info');
+});
+
+document.getElementById('copyId').addEventListener('click', () => {
+  const id = idVal.textContent;
+  if (id && id !== '—') clip(id, 'Post ID copied');
+  else showToast('No Post ID to copy', 'error');
+});
+
+// Enter key shortcut
+postUrlInput.addEventListener('keydown', e => { if (e.key === 'Enter') findBtn.click() });
+</script>
+</body>
+</html>
