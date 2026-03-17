@@ -1,185 +1,208 @@
-// ═══════════════════════════════════════════════
-//  KiroTools — script.js  |  Shared utilities
-// ═══════════════════════════════════════════════
+// ════════════════════════════════════════════════
+//  KiroTools — script.js  v2
+// ════════════════════════════════════════════════
 
-/* ── Tools registry for search ── */
+/* ── Tool registry for search ── */
 const TOOLS = [
-  { name: 'Check Live UID Facebook', desc: 'Check if Facebook UIDs are live or dead', url: 'check-live-uid.html', icon: 'green' },
-  { name: 'Find Facebook ID', desc: 'Find Facebook IDs from profile, group, post URL', url: 'find-facebook-id.html', icon: 'gray' },
-  { name: 'API Documentation', desc: 'Full API reference for KiroTools', url: 'documentation.html', icon: 'gray' },
+  {
+    name: 'Check Live UID Facebook',
+    desc: 'Verify if Facebook UIDs are live or dead',
+    url: 'check-live-uid.html',
+    cls: 'g',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
+  },
+  {
+    name: 'Find Facebook ID',
+    desc: 'Find Facebook IDs from any profile or group URL',
+    url: 'find-facebook-id.html',
+    cls: 'k',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>`
+  },
+  {
+    name: 'API Documentation',
+    desc: 'Full API reference for KiroTools',
+    url: 'documentation.html',
+    cls: 'k',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`
+  },
 ];
 
-const TOOL_ICONS = {
-  green: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
-  gray:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>`,
-};
+/* ── Geist loader SVG ── */
+const GEIST = `<svg class="geist" height="14" viewBox="0 0 16 16" width="14" style="color:currentColor">
+  <g clip-path="url(#gc)">
+    <path d="M8 0V4" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".5" d="M8 16V12" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".9" d="M3.3 1.53L5.65 4.76" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".1" d="M12.7 1.53L10.35 4.76" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".4" d="M12.7 14.47L10.35 11.24" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".6" d="M3.3 14.47L5.65 11.24" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".2" d="M15.61 5.53L11.8 6.76" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".7" d="M.39 10.47L4.2 9.24" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".3" d="M15.61 10.47L11.8 9.24" stroke="currentColor" stroke-width="1.5"/>
+    <path opacity=".8" d="M.39 5.53L4.2 6.76" stroke="currentColor" stroke-width="1.5"/>
+  </g>
+  <defs><clipPath id="gc"><rect width="16" height="16" fill="white"/></clipPath></defs>
+</svg>`;
 
-/* ── Drawer ── */
-const overlay   = document.getElementById('overlay');
-const drawer    = document.getElementById('drawer');
+/* ════════════════════════
+   DRAWER
+════════════════════════ */
+const _overlay = document.getElementById('overlay');
+const _drawer  = document.getElementById('drawer');
 
 function openDrawer() {
-  drawer.classList.add('open');
-  overlay.classList.add('open');
+  _drawer.classList.add('open');
+  _overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function closeDrawer() {
-  drawer.classList.remove('open');
-  overlay.classList.remove('open');
+  _drawer.classList.remove('open');
+  _overlay.classList.remove('open');
   document.body.style.overflow = '';
 }
 
-document.querySelectorAll('.js-open-drawer').forEach(b => b.addEventListener('click', openDrawer));
-document.querySelectorAll('.js-close-drawer').forEach(b => b.addEventListener('click', closeDrawer));
-overlay.addEventListener('click', closeDrawer);
+document.querySelectorAll('.js-open').forEach(b  => b.addEventListener('click', openDrawer));
+document.querySelectorAll('.js-close').forEach(b => b.addEventListener('click', closeDrawer));
+_overlay.addEventListener('click', closeDrawer);
 
 /* ── Nav sections ── */
-document.querySelectorAll('.nav-sec-hdr').forEach(hdr => {
-  hdr.addEventListener('click', () => {
-    const items = hdr.nextElementSibling;
-    const isOpen = items.classList.contains('open');
-    hdr.classList.toggle('expanded', !isOpen);
-    items.classList.toggle('open', !isOpen);
+document.querySelectorAll('.nav-sec-hdr').forEach(h => {
+  h.addEventListener('click', () => {
+    const list = h.nextElementSibling;
+    const open = list.classList.contains('open');
+    h.classList.toggle('exp', !open);
+    list.classList.toggle('open', !open);
   });
 });
 
-/* ── Drawer search ── */
-const dsearch = document.getElementById('drawerSearch');
-if (dsearch) {
-  dsearch.addEventListener('input', () => {
-    const q = dsearch.value.toLowerCase().trim();
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.style.display = (!q || item.textContent.toLowerCase().includes(q)) ? '' : 'none';
+/* ── Drawer filter ── */
+const _ds = document.getElementById('dsInput');
+if (_ds) {
+  _ds.addEventListener('input', () => {
+    const q = _ds.value.toLowerCase().trim();
+    document.querySelectorAll('.nav-link').forEach(l => {
+      l.style.display = (!q || l.textContent.toLowerCase().includes(q)) ? '' : 'none';
     });
-    if (q) document.querySelectorAll('.nav-items').forEach(s => s.classList.add('open'));
+    if (q) document.querySelectorAll('.nav-list').forEach(s => s.classList.add('open'));
   });
 }
 
-/* ── Subnav search ── */
-const subnavInput    = document.getElementById('subnavSearch');
-const searchDropdown = document.getElementById('searchDropdown');
+/* ════════════════════════
+   SEARCH (subnav + mobile)
+════════════════════════ */
+function buildSearchResult(tools) {
+  if (!tools.length) return `<div class="s-empty">No tools found</div>`;
+  return tools.map(t => `
+    <a class="s-item" href="${t.url}">
+      <div class="s-ico ${t.cls}">${t.svg}</div>
+      <div>
+        <div class="s-name">${t.name}</div>
+        <div class="s-desc">${t.desc}</div>
+      </div>
+    </a>`).join('');
+}
 
-if (subnavInput && searchDropdown) {
-  subnavInput.addEventListener('input', () => {
-    const q = subnavInput.value.trim().toLowerCase();
-    if (!q) { searchDropdown.classList.remove('show'); return; }
+function attachSearch(inputId, dropId) {
+  const inp  = document.getElementById(inputId);
+  const drop = document.getElementById(dropId);
+  if (!inp || !drop) return;
 
+  inp.addEventListener('input', () => {
+    const q = inp.value.trim().toLowerCase();
+    if (!q) { drop.classList.remove('open'); return; }
     const matches = TOOLS.filter(t =>
       t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q)
     );
-
-    if (!matches.length) {
-      searchDropdown.innerHTML = `<div class="search-no-result">No tools found for "<strong>${escapeHtml(q)}</strong>"</div>`;
-    } else {
-      searchDropdown.innerHTML = matches.map(t => `
-        <a class="search-result-item" href="${t.url}">
-          <div class="search-result-icon ${t.icon}">${TOOL_ICONS[t.icon]}</div>
-          <div>
-            <div class="search-result-name">${highlightMatch(t.name, q)}</div>
-            <div class="search-result-desc">${t.desc}</div>
-          </div>
-        </a>
-      `).join('');
-    }
-    searchDropdown.classList.add('show');
+    drop.innerHTML = buildSearchResult(matches);
+    drop.classList.add('open');
   });
 
-  // close on outside click
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { drop.classList.remove('open'); inp.value = ''; }
+  });
+
   document.addEventListener('click', e => {
-    if (!subnavInput.contains(e.target) && !searchDropdown.contains(e.target)) {
-      searchDropdown.classList.remove('show');
-    }
-  });
-
-  subnavInput.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      searchDropdown.classList.remove('show');
-      subnavInput.value = '';
+    if (!inp.contains(e.target) && !drop.contains(e.target)) {
+      drop.classList.remove('open');
     }
   });
 }
 
-function escapeHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function highlightMatch(text, q) {
-  const i = text.toLowerCase().indexOf(q);
-  if (i === -1) return escapeHtml(text);
-  return escapeHtml(text.slice(0, i))
-    + `<strong>${escapeHtml(text.slice(i, i + q.length))}</strong>`
-    + escapeHtml(text.slice(i + q.length));
+// Desktop subnav search
+attachSearch('snavInput', 'snavDrop');
+
+// Mobile search toggle
+const _msbtn  = document.getElementById('mobSearchBtn');
+const _msbar  = document.getElementById('mobSearchBar');
+const _page   = document.querySelector('.page');
+
+if (_msbtn && _msbar) {
+  _msbtn.addEventListener('click', () => {
+    const open = _msbar.classList.toggle('visible');
+    if (open) {
+      if (_page) _page.classList.add('with-mob-search');
+      setTimeout(() => document.getElementById('mobInput')?.focus(), 50);
+    } else {
+      if (_page) _page.classList.remove('with-mob-search');
+    }
+  });
+  attachSearch('mobInput', 'mobDrop');
 }
 
-/* ── Info tabs ── */
-document.querySelectorAll('.itab-btn').forEach(btn => {
+/* ════════════════════════
+   INFO TABS
+════════════════════════ */
+document.querySelectorAll('.itab').forEach(btn => {
   btn.addEventListener('click', () => {
-    const target = btn.dataset.tab;
-    const wrap = btn.closest('.info-tabs-wrap');
-    wrap.querySelectorAll('.itab-btn').forEach(b => b.classList.remove('active'));
-    wrap.querySelectorAll('.itab-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    wrap.querySelector(`[data-panel="${target}"]`).classList.add('active');
+    const tab  = btn.dataset.tab;
+    const wrap = btn.closest('.itabs');
+    wrap.querySelectorAll('.itab').forEach(b => b.classList.remove('on'));
+    wrap.querySelectorAll('.ipanel').forEach(p => p.classList.remove('on'));
+    btn.classList.add('on');
+    wrap.querySelector(`[data-panel="${tab}"]`).classList.add('on');
   });
 });
 
-/* ── FAQ accordion ── */
+/* ── FAQ ── */
 document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
 });
 
-/* ── Toast ── */
-const toastContainer = document.getElementById('toastContainer');
+/* ════════════════════════
+   TOAST
+════════════════════════ */
+const _tc = document.getElementById('toasts');
 
-function showToast(msg, type = 'info') {
+function toast(msg, type = 'info') {
   const icons = {
-    success: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>`,
-    error:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>`,
-    info:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01M12 12v4"/></svg>`,
+    ok: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>`,
+    er: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>`,
   };
+  const cls = type === 'success' ? 'ok' : type === 'error' ? 'er' : '';
+  const ico = cls === 'ok' ? icons.ok : cls === 'er' ? icons.er : '';
   const t = document.createElement('div');
-  t.className = `toast ${type}`;
-  t.innerHTML = `${icons[type]||icons.info}<span>${msg}</span>`;
-  toastContainer.appendChild(t);
-  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 200) }, 2800);
+  t.className = `toast ${cls}`;
+  t.innerHTML = `${ico}<span>${msg}</span>`;
+  _tc.appendChild(t);
+  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 200); }, 2800);
 }
 
-/* ── Copy ── */
-async function copyToClipboard(text, label = 'Copied') {
+/* ════════════════════════
+   CLIPBOARD / EXPORT
+════════════════════════ */
+async function clip(text, label = 'Copied') {
   try {
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(text);
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-    }
-    showToast(`${label} to clipboard!`, 'success');
-  } catch { showToast('Failed to copy', 'error') }
+    if (navigator.clipboard) await navigator.clipboard.writeText(text);
+    else { const a=document.createElement('textarea');a.value=text;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a) }
+    toast(`${label}!`, 'success');
+  } catch { toast('Copy failed', 'error') }
 }
 
-/* ── Export ── */
-function exportAsText(content, filename = 'export.txt') {
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url);
-  showToast('File exported!', 'success');
+function save(text, name = 'export.txt') {
+  const b = new Blob([text], {type:'text/plain'});
+  const u = URL.createObjectURL(b);
+  const a = document.createElement('a');
+  a.href=u; a.download=name; a.click();
+  URL.revokeObjectURL(u);
+  toast('Exported!', 'success');
 }
-
-/* ── Geist loader SVG HTML ── */
-const LOADER_SVG = `<svg class="geist-loader" data-testid="geist-icon" height="15" stroke-linejoin="round" viewBox="0 0 16 16" width="15" style="color:currentColor">
-  <g clip-path="url(#clip0_k)">
-    <path d="M8 0V4" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.5" d="M8 16V12" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.9" d="M3.29773 1.52783L5.64887 4.7639" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.1" d="M12.7023 1.52783L10.3511 4.7639" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.4" d="M12.7023 14.472L10.3511 11.236" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.6" d="M3.29773 14.472L5.64887 11.236" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.2" d="M15.6085 5.52783L11.8043 6.7639" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.7" d="M0.391602 10.472L4.19583 9.23598" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.3" d="M15.6085 10.4722L11.8043 9.2361" stroke="currentColor" stroke-width="1.5"/>
-    <path opacity="0.8" d="M0.391602 5.52783L4.19583 6.7639" stroke="currentColor" stroke-width="1.5"/>
-  </g>
-  <defs><clipPath id="clip0_k"><rect width="16" height="16" fill="white"/></clipPath></defs>
-</svg>`;
