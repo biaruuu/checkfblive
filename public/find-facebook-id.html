@@ -72,7 +72,6 @@
       <div class="nav-list open">
         <a href="check-live-uid.html" class="nav-link">Check Live UID Facebook</a>
         <a href="find-facebook-id.html" class="nav-link on">Find Facebook ID</a>
-        <a href="find-facebook-post-id.html" class="nav-link">Find Facebook Post ID</a>
       </div>
     </div>
   </nav>
@@ -91,6 +90,7 @@
     </div>
   </div>
 
+  <!-- Input card -->
   <div class="card">
     <div class="card-body">
       <label class="flabel">Enter Facebook URL</label>
@@ -98,8 +98,9 @@
     </div>
   </div>
 
+  <!-- Actions -->
   <div class="btn-row">
-    <button class="btn btn-glass" id="findBtn">
+    <button class="btn btn-dark" id="findBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Find Facebook ID
     </button>
@@ -109,6 +110,7 @@
     </button>
   </div>
 
+  <!-- Result: dark card with the UID prominently displayed -->
   <div class="id-card" id="idCard">
     <div class="id-lbl">Facebook ID</div>
     <div class="id-val" id="idVal">—</div>
@@ -118,6 +120,7 @@
     </button>
   </div>
 
+  <!-- Info tabs -->
   <div class="itabs">
     <div class="itabs-hdr">
       <button class="itab on" data-tab="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Guide</button>
@@ -126,21 +129,26 @@
       <button class="itab" data-tab="review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Review</button>
     </div>
     <div class="ipanel on" data-panel="guide">
-      <div class="gstep"><div class="gnum">1</div><div class="gline"></div><div><div class="g-ttl">Copy the URL</div><div class="g-dsc">Copy a Facebook Profile, Group, or Page URL from your browser.</div></div></div>
-      <div class="gstep"><div class="gnum">2</div><div class="gline"></div><div><div class="g-ttl">Paste &amp; Find</div><div class="g-dsc">Paste into the input and click Find Facebook ID. The numeric ID appears instantly.</div></div></div>
-      <div class="gstep"><div class="gnum">3</div><div><div class="g-ttl">Copy the ID</div><div class="g-dsc">Click Copy ID to copy the result directly to your clipboard.</div></div></div>
+      <div class="gstep"><div class="gnum">1</div><div class="gline"></div><div><div class="g-ttl">Copy the URL</div><div class="g-dsc">Copy a Facebook Profile, Group, or Page URL from your browser address bar.</div></div></div>
+      <div class="gstep"><div class="gnum">2</div><div class="gline"></div><div><div class="g-ttl">Paste & Search</div><div class="g-dsc">Paste into the input field and click Find Facebook ID.</div></div></div>
+      <div class="gstep"><div class="gnum">3</div><div><div class="g-ttl">Copy the ID</div><div class="g-dsc">The numeric Facebook ID appears. Click Copy ID to copy it instantly.</div></div></div>
     </div>
     <div class="ipanel" data-panel="about">
       <p class="about-p">The <strong>Find Facebook ID</strong> tool retrieves the numeric ID behind any Facebook profile, group, or page URL. Paste a URL and get the ID instantly.</p>
       <p class="about-p">Useful for API integrations, ad targeting, and data exports that require numeric Facebook IDs.</p>
     </div>
     <div class="ipanel" data-panel="faq">
-      <div class="faq"><div class="faq-q"><span class="faq-qt">What URL types are supported?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Profile, Group, and Page URLs. You can also enter a username (e.g. <code>cristiano</code>).</div></div></div>
+      <div class="faq"><div class="faq-q"><span class="faq-qt">What URL types are supported?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Profile, Group, and Page URLs. You can also enter a username directly (e.g. <code>cristiano</code>).</div></div></div>
       <div class="faq"><div class="faq-q"><span class="faq-qt">Why might a lookup fail?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">Private profiles, malformed URLs, or temporary rate limiting. Wait a moment and retry.</div></div></div>
-      <div class="faq"><div class="faq-q"><span class="faq-qt">What is the response format?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">The server returns <code>{"success":true,"uid":"12345"}</code> — the numeric UID is in the <code>uid</code> field.</div></div></div>
+      <div class="faq"><div class="faq-q"><span class="faq-qt">What is the API response format?</span><svg class="faq-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div class="faq-a"><div class="faq-at">The server returns <code>{"success":true,"uid":"12345"}</code> — the numeric UID is in the <code>uid</code> field.</div></div></div>
     </div>
     <div class="ipanel" data-panel="review">
-      <div class="rev"><div class="rev-stars">⭐⭐⭐⭐⭐</div><div class="rev-title">Enjoying KiroTools?</div><div class="rev-desc">Your feedback helps us keep improving!</div><button class="rev-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Leave a Review</button></div>
+      <div class="rev">
+        <div class="rev-stars">⭐⭐⭐⭐⭐</div>
+        <div class="rev-title">Enjoying KiroTools?</div>
+        <div class="rev-desc">Your feedback helps us keep improving!</div>
+        <button class="rev-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Leave a Review</button>
+      </div>
     </div>
   </div>
 
@@ -149,26 +157,69 @@
 
 <script src="script.js"></script>
 <script>
-const urlInput=document.getElementById('urlInput'),findBtn=document.getElementById('findBtn'),resetBtn=document.getElementById('resetBtn'),idCard=document.getElementById('idCard'),idVal=document.getElementById('idVal');
-const BTN_DEF=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Find Facebook ID`;
-findBtn.addEventListener('click',async()=>{
-  const url=urlInput.value.trim();
-  if(!url)return showToast('Please enter a Facebook URL','error');
-  findBtn.disabled=true;findBtn.innerHTML=GEIST+' Finding…';idCard.classList.remove('show');
-  try{
-    const res=await fetch('/api/find-facebook-id',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
-    const data=await res.json();
-    if(!res.ok)throw new Error(data.error||`Server error ${res.status}`);
-    if(data.success===false)throw new Error(data.error||'Lookup failed');
-    const id=String(data.uid??data.id??'').trim();
-    if(!id)throw new Error('No ID returned');
-    idVal.textContent=id;idCard.classList.add('show');showToast('ID found!','success');
-  }catch(err){console.error(err);showToast(err.message||'Failed to find ID','error')}
-  finally{findBtn.disabled=false;findBtn.innerHTML=BTN_DEF}
+/* ═══════════════════════════════════════════
+   FIND FACEBOOK ID
+   API response: {"success":true,"uid":"12345"}
+═══════════════════════════════════════════ */
+const urlInput = document.getElementById('urlInput');
+const findBtn  = document.getElementById('findBtn');
+const resetBtn = document.getElementById('resetBtn');
+const idCard   = document.getElementById('idCard');
+const idVal    = document.getElementById('idVal');
+
+const BTN_DEFAULT = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Find Facebook ID`;
+
+findBtn.addEventListener('click', async () => {
+  const url = urlInput.value.trim();
+  if (!url) return showToast('Please enter a Facebook URL', 'error');
+
+  findBtn.disabled = true;
+  findBtn.innerHTML = GEIST + ' Finding…';
+  idCard.classList.remove('show');
+
+  try {
+    const res  = await fetch('/api/find-facebook-id', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
+
+    /*
+     *  Response: {"success":true,"uid":"22130498"}
+     *  We extract the uid field
+     */
+    if (data.success === false) throw new Error(data.error || 'Lookup failed');
+
+    const id = String(data.uid ?? data.id ?? '').trim();
+    if (!id) throw new Error('No ID returned from server');
+
+    idVal.textContent = id;
+    idCard.classList.add('show');
+    showToast('ID found!', 'success');
+
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || 'Failed to find ID', 'error');
+  } finally {
+    findBtn.disabled = false;
+    findBtn.innerHTML = BTN_DEFAULT;
+  }
 });
-resetBtn.addEventListener('click',()=>{urlInput.value='';idCard.classList.remove('show');showToast('Reset!','info')});
-document.getElementById('copyId').addEventListener('click',()=>{const id=idVal.textContent;if(id&&id!=='—')clip(id,'ID copied');else showToast('No ID to copy','error')});
-urlInput.addEventListener('keydown',e=>{if(e.key==='Enter')findBtn.click()});
+
+resetBtn.addEventListener('click', () => {
+  urlInput.value = '';
+  idCard.classList.remove('show');
+  showToast('Reset!', 'info');
+});
+
+document.getElementById('copyId').addEventListener('click', () => {
+  const id = idVal.textContent;
+  if (id && id !== '—') clip(id, 'ID copied');
+});
+
+urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') findBtn.click() });
 </script>
 </body>
 </html>
